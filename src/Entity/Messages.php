@@ -33,13 +33,13 @@ class Messages
     private $statut;
 
     /**
-     * @ORM\ManyToOne(targetEntity=sujet::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=Sujet::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sujet;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

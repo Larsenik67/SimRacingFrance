@@ -35,13 +35,13 @@ class MessagePrive
     private $dateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="messagePrives")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messagePrives")
      * @ORM\JoinColumn(nullable=false)
      */
     private $destinataire;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="messagePrives")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messagePrives")
      * @ORM\JoinColumn(nullable=false)
      */
     private $expediteur;

@@ -50,12 +50,12 @@ class Sujet
     private $closed;
 
     /**
-     * @ORM\ManyToOne(targetEntity=team::class, inversedBy="sujets")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="sujets")
      */
     private $team;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="sujets")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sujets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

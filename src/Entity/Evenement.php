@@ -35,13 +35,13 @@ class Evenement
     private $nbPlace;
 
     /**
-     * @ORM\ManyToOne(targetEntity=jeu::class, inversedBy="evenements")
+     * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="evenements")
      * @ORM\JoinColumn(nullable=false)
      */
     private $jeu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=team::class, inversedBy="evenements")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="evenements")
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;
