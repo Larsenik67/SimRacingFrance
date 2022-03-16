@@ -1,0 +1,60 @@
+*{
+    box-sizing: border-box;
+}
+/****************** HEADER START  ************************/
+
+
+/****************** NAV START  ************************/
+header{
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+.logo{
+    width: 5em;
+    border-radius: 80%;
+}
+/* Navbar */
+#menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+#menu-links a{
+    color: #fff;
+    margin-left: 0.5em;
+    display: inline-block;
+    font-size: 20px;
+}
+#menu-links .ubereat{
+    background: rgb(255, 255, 255);
+    
+    box-shadow: none;
+    color:black;
+    border-radius: 500px;
+    padding: 1px 8px;
+}
+#burger{
+    color: #fff;
+    display: none;
+    padding: 0.3em 0.3em 0.2em 0.3em;
+    border: 2px solid #fff;
+    font-size: 1.5em;
+    min-width: 52px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.side-spaced{
+    padding: 1em 6em;
+}
+
+/****************** NAV END  ************************/
+
+
+/***************** HEADER END **************************/

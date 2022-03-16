@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarala:wght@700&display=swap');
+/*********** Police ********************/
+
+.police_italien{
+    font-family: "Great Vibes", cursive;
+    font-size: 50px;
+    margin: 0;
+}
+
+
+.police_logo{
+    font-family: 'Sarala', sans-serif;
+    font-size: 30px;
+    margin: 0;
+    color: white;
+}
+
+
+
+/********** Colors **************/
+.red{
+    color: red;
+}
+.gray{
+    color: gray;
+}
+.white{
+    color: white;
+}
+.black{
+    color: black;
+}
+.cyan{
+    color: #0EC2f7;
+}
+.bleu{
+    color: #1651bd;
+}
+.vert{
+    color: #0a7a00;
+}
+/********** Flex **************/
+.flex{
+    display: flex;
+}
+.wrap{
+    flex-wrap: wrap;
+}
+.column{
+    flex-direction: column;
+}
+
+.jc-center{
+    justify-content: center;
+}
+.jc-end{
+    justify-content: flex-end;
+}
+.jc-se{
+    justify-content: space-evenly;
+}
+.jc-sb{
+    justify-content: space-between;
+}
+
+
+.ai-center{
+    align-items: center;
+}
+.ai-end{
+    align-items: flex-end;
+}
+
+.f-1{
+    flex: 1;
+}
+.f-2{
+    flex: 2;
+}
+.f-3{
+    flex: 3;
+}
+
+
+
+/********** Margin **************/
+.m-0{
+    margin: 0;
+    margin-right: 0 !important;
+}
+.m-a{
+    margin: auto;
+}
+.m{
+    margin: 1em;
+}
+.ml-1{
+    margin-left: 1em;
+}
+.mr-1{
+    margin-right: 1em;
+}
+.mt-1{
+    margin-top: 1em;
+}
+.mb-1{
+    margin-bottom: 1em;
+}
+.ml{
+    margin-left: 1.5em;
+}
+.mr{
+    margin-right: 1.5em;
+}
+.mt{
+    margin-top: 1.5em;
+}
+.mb{
+    margin-bottom: 1.5em;
+}
+
+/********** Padding **************/
+.p{
+    padding: 1em;
+}
+.pl{
+    padding-left: 1.5em;
+}
+.pd{
+    padding-right: 1.5em;
+}
+.pt{
+    padding-top: 1.5em;
+}
+.pb{
+    padding-bottom: 1.5em;
+}
+
+/************** Font-Size *************/
+
+
+.fs-10{
+    font-size: 10px;
+}
+.fs-12{
+    font-size: 12px;
+}
+.fs-14{
+    font-size: 14px;
+}
+.fs-16{
+    font-size: 16px;
+}
+.fs-18{
+    font-size: 18px ;
+}
+.fs-20{
+    font-size: 20px ;
+}
+.fs-e1{
+    font-size: 1em ;
+}
+.fs-e2{
+    font-size: 2em ;
+}
+.fs-e3{
+    font-size: 3em ;
+}
+
+.ta-center{
+    text-align: center;
+}
+
+
+.shadow_contour{
+    text-shadow: -1px 1px 0 #000,
+                          1px 1px 0 #000,
+                         1px -1px 0 #000,
+                        -1px -1px 0 #000;
+}
+
+
+.cursor-text{
+    cursor: text;
+}
+
+
+
