@@ -3,14 +3,24 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+
+<main>
+        <!-- Début Section Accueil : image et texte-->
+        <section class="section_bg_img flex jc-center ai-center">
+            <div class="ta-center white mb-5">
+                <h1 id="main_titre" class="shadow_contour">Register</h1>
+            </div>
+        </section>
+        <!-- Fin Section Accueil-->
+
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <section class="section_login">
 
-    {{ form_start(registrationForm) }}
-    
+    {{ form_start(registrationForm, {'attr' : { 'class': 'login_form flex column'} }) }}
+        <h1 class="h3 mb-3 font-weight-normal">Inscrivez-vous</h1>
         {{ form_row(registrationForm.nom, {
             label: 'Nom de pilote'
         }) }}
@@ -19,6 +29,6 @@
         {{ form_row(registrationForm.plainPassword.second) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-lg btn-primar">S'inscrire</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

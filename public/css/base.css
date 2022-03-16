@@ -1,21 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 *{
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 /****************** HEADER START  ************************/
 
 
 /****************** NAV START  ************************/
 header{
-    background-color: transparent;
-    position: absolute;
+    background-color: #0065DB;
     top: 0;
     right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
 }
+
 .logo{
     width: 5em;
-    border-radius: 80%;
+    font-size: 20px;
 }
 /* Navbar */
 #menu{
@@ -31,14 +34,7 @@ header{
     display: inline-block;
     font-size: 20px;
 }
-#menu-links .ubereat{
-    background: rgb(255, 255, 255);
-    
-    box-shadow: none;
-    color:black;
-    border-radius: 500px;
-    padding: 1px 8px;
-}
+
 #burger{
     color: #fff;
     display: none;
@@ -56,5 +52,18 @@ header{
 
 /****************** NAV END  ************************/
 
+/***************** SEARCH BAR ***********************/
+
+.search_bar{
+    width: 80%;
+    margin: auto;
+    background-color: #7A7A7A;
+    color: white;
+    position: relative;
+}
+
+.search_bar select{
+    width: 20%;
+}
 
 /***************** HEADER END **************************/
