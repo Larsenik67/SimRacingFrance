@@ -4,6 +4,10 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
+
+body{
+    background-color: #7A7A7A;
+}
 /****************** HEADER START  ************************/
 
 

@@ -1,7 +1,77 @@
+
 {% extends 'base.html.twig' %}
-
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/home.css' }}">
+ {% endblock %}
 {% block body %}
-
+<main class="wrapper">
+    <section class="accueil">
+        <div class="section_colonne">
+            <h3>Prochain Evenement</h3>
+            <ul>
+                <li>
+                    <div class="vignette event_container">
+                        <div>
+                            <div class="longue_bulle detail_event marge" >08/05</div>
+                            <div class="longue_bulle detail_event marge" >18:00</div>
+                            <div class="longue_bulle detail_event">
+                                <div>places</div>
+                                <div>5/24</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="longue_bulle marge">nom de l'evenement</div>
+                            <div class="longue_bulle marge">nom de la team</div>
+                            <div class="longue_bulle description_event">description</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="section_colonne">
+            <h3>Dernière discussions</h3>
+            <ul>
+                <li>
+                    <div class="vignette">
+                        <div class="longue_bulle marge">
+                            Titre du sujet
+                        </div>
+                        <div class="longue_bulle marge">
+                            Description
+                        </div>
+                        <div class="detail_sujet">
+                            <div class="longue_bulle">
+                                <div>25</div>
+                                <div>réponse</div>
+                            </div>
+                            <div class="longue_bulle">
+                                Contenu du 1er message
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="section_colonne">
+            <h3>News sportif</h3>
+            <ul>
+                <li>
+                    <div class="vignette">
+                        <div class="picture_div marge">
+                            <img id="picture" src="https://www.khotwa-group.com/wp-content/uploads/2020/08/Icons-18.png" alt="News">
+                            <div id="div_text">
+                                <h4><span class="uppercase">Titre de l'article</span></h4>
+                            </div>
+                        </div>
+                        <div class="source">
+                            <p>Source</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</main>
 {% block javascripts %}
 <script src="{{ 'js/google.js' }}"></script>
 {% endblock %}

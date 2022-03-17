@@ -1,0 +1,151 @@
+.wrapper{
+    max-width: 90%;
+    margin: auto;
+}
+
+.accueil{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10em 0em 10em 0em;
+    padding: 2em;
+}
+
+.accueil>div>ul{
+    width: 95%;
+    height: 80%;
+    overflow:hidden; 
+    overflow-y:auto;
+    list-style-type: none;
+    padding: 0;
+    margin: auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.section_colonne{
+flex: 1;
+background-color: #0065DB;
+height: 40em;
+margin: 1em;
+justify-content: center;
+text-align: center;
+overflow:hidden; 
+}
+
+.vignette{
+    margin-top: 2em;
+    border-radius: 14px;
+    background-color: #FFFFFF;
+    padding: 1em;
+    border: 1px solid #000000;
+}
+
+.picture_div{
+    display: flex;
+    position: relative;
+}
+#picture{
+    width: 100%;
+    height: 7em;
+    object-position: center;
+    object-fit: cover;
+    filter: brightness(80%);
+    border-radius: 14px;
+    border: 1px solid #000000;
+    
+}
+#div_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    font-size: 3.6vh;
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+    text-shadow: 1px 1px 5px black;
+}
+
+.source>p{
+    margin: 0;
+}
+
+.source{
+    width: 50%;
+    left: 0;
+    border-radius: 14px;
+    background-color: #7A7A7A;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.longue_bulle{
+    width: 100%;
+    border-radius: 14px;
+    background-color: #7A7A7A;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.marge{
+    margin-bottom: 0.5em;
+}
+
+.detail_sujet{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+.detail_sujet>div:first-child{
+    flex: 1;
+    height: 100%;
+    margin-right: 0.5em;
+}
+
+.detail_sujet>div:last-child{
+    flex: 3;
+    height: 100%;
+    padding: 2em 0;
+}
+
+.event_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.event_container>div:first-child{
+    flex:1;
+    height: 100%;
+    margin-right: 0.5em;
+}
+
+.event_container>div:last-child{
+    flex:3;
+    height: 100%;
+}
+
+.description_event{
+    padding: 2em 0;
+}
+
+.detail_event{
+    padding: 0.5em 0;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #11171a;
+  border-radius: 10px;
+}
