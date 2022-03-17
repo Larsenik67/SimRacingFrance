@@ -9,47 +9,51 @@
         <div class="section_colonne">
             <h3>Prochain Evenement</h3>
             <ul>
+            {% for event in events %}
                 <li>
                     <div class="vignette event_container">
                         <div>
-                            <div class="longue_bulle detail_event marge" >08/05</div>
-                            <div class="longue_bulle detail_event marge" >18:00</div>
+                            <div class="longue_bulle detail_event marge" >{{ event.dateTime|date('d/m') }}</div>
+                            <div class="longue_bulle detail_event marge" >{{ event.dateTime|date('H:i') }}</div>
                             <div class="longue_bulle detail_event">
                                 <div>places</div>
-                                <div>5/24</div>
+                                <div>{{ event.users|length }}/{{ event.nbPlace }}</div>
                             </div>
                         </div>
                         <div>
-                            <div class="longue_bulle marge">nom de l'evenement</div>
-                            <div class="longue_bulle marge">nom de la team</div>
-                            <div class="longue_bulle description_event">description</div>
+                            <div class="longue_bulle marge">{{ event.nom }}</div>
+                            <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                            <div class="longue_bulle description_event">{{ event.description }}</div>
                         </div>
                     </div>
                 </li>
+            {% endfor %}
             </ul>
         </div>
         <div class="section_colonne">
             <h3>Dernière discussions</h3>
             <ul>
+            {% for sujet in sujets %}
                 <li>
                     <div class="vignette">
                         <div class="longue_bulle marge">
-                            Titre du sujet
+                            {{ sujet.titre }}
                         </div>
                         <div class="longue_bulle marge">
-                            Description
+                            {{ sujet.user.nom }}
                         </div>
                         <div class="detail_sujet">
                             <div class="longue_bulle">
-                                <div>25</div>
-                                <div>réponse</div>
+                                <div>{{ sujet.messages|length }}</div>
+                                <div>réponse(s)</div>
                             </div>
                             <div class="longue_bulle">
-                                Contenu du 1er message
+                                {{ sujet.contenu }}
                             </div>
                         </div>
                     </div>
                 </li>
+            {% endfor %}
             </ul>
         </div>
         <div class="section_colonne">

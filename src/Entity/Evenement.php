@@ -51,6 +51,11 @@ class Evenement
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateTime;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -144,6 +149,18 @@ class Evenement
         if ($this->users->removeElement($user)) {
             $user->removeEvenement($this);
         }
+
+        return $this;
+    }
+
+    public function getDateTime(): ?\DateTimeInterface
+    {
+        return $this->dateTime;
+    }
+
+    public function setDateTime(\DateTimeInterface $dateTime): self
+    {
+        $this->dateTime = $dateTime;
 
         return $this;
     }
