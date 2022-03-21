@@ -19,9 +19,6 @@ class UserChecker implements UserCheckerInterface
 
     public function checkPostAuth(UserInterface $user): void
     {
-        if (!$user instanceof User) {
-            return;
-        }
 
         if ($user->getIsVerified() == 0) {
             // the message passed to this exception is meant to be displayed to the user

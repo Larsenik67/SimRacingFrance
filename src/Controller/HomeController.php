@@ -31,4 +31,12 @@ class HomeController extends AbstractController
             'sujets' => $sujets,
         ]);
     }
+
+    /**
+     * @Route("/news", name="app_news")
+     */
+    public function news(): Response
+    {
+        return $this->render('home/news.html.twig');
+    }
 }

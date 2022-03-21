@@ -29,7 +29,7 @@
                     <a class="nav_link mr" href="{{ path('app_home')}}">Accueil</a>
                     <a class="nav_link mr" href="">Profile</a>
                     <a class="nav_link mr" href="">Messagerie</a>
-                    <a class="nav_link mr" href="}">News</a>
+                    <a class="nav_link mr" href="{{ path('app_news')}}">News</a>
                     <a class="nav_link mr" href="">Discussions</a>
                     <a class="nav_link mr" href="">Teams</a>
                     <a class="nav_link mr" href="">Évènements</a>
@@ -58,12 +58,7 @@
             </nav>
             <div class ="search_bar">
                 <div class="input-group mb-3">
-                      <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Pilote</option>
-                            <option value="1">Team</option>
-                            <option value="2">Évènement</option>
-                        </select>
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Recherchez un pilote, une team ou un évènement...">
                 </div>
             </div>
         </header>
