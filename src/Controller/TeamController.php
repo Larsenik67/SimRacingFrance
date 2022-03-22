@@ -74,7 +74,7 @@ class TeamController extends AbstractController
 
             $user = $this->getUser();
             $team->addUser($user);
-            $role = ["ROLE_MEMBRE"];
+            $role = ["ROLE_ADMIN"];
             $user->setRoleTeam($role);
             $entityManager->persist($team);
             $entityManager->flush();
