@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+{{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_team_create'), 'method': 'POST'}) }}
+{{ form_widget(form.nom, { 'label': 'Nom de la team' }) }}
+{{ form_widget(form.description, { 'label': 'Description de la team' }) }}
+{{ form_widget(form.jeu, { 'label': 'jeu' }) }}
+{{ form_widget(form.submit, { 'label': 'Crée la team' }) }}
+                {{ form_end(form) }}
+                </section>
+                </main>
+{% endblock %}

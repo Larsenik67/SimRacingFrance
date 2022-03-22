@@ -40,40 +40,6 @@ class HomeController extends AbstractController
     }
 
     /**
-   * @Route("/search", name="ajax_search")
-   * @Method("GET")
-   */
-  /*public function searchAction(Request $request)
-  {
-    $teams = $doctrine
-            ->getRepository(Team::class)
-            ->findAll();
-
-      $em = $this->getDoctrine()->getManager();
-
-      $requestString = $request->get('q');
-
-      $entities =  $em->getRepository('AppBundle:Entity')->findEntitiesByString($requestString);
-
-      if(!$entities) {
-          $result['entities']['error'] = "keine Einträge gefunden";
-      } else {
-          $result['entities'] = $this->getRealEntities($entities);
-      }
-
-      return new Response(json_encode($result));
-  }
-
-  public function getRealEntities($entities){
-
-      foreach ($entities as $entity){
-          $realEntities[$entity->getId()] = $entity->getFoo();
-      }
-
-      return $realEntities;
-  }*/
-
-    /**
      * @Route("/news", name="app_news")
      */
     public function news(): Response

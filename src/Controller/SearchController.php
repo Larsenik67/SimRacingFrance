@@ -27,27 +27,6 @@ class SearchController extends AbstractController
         $form_search = $this->createForm(SearchBarType::class);
         $form_search->handleRequest($request);
 
-        if($request->isXmlHttpRequest()){  
-
-            $search = $request->get('text');
-
-            if(!$search) { return new NotFoundHttpException(); }
-
-            $users = $UserRepo->searchUserByName($search);
-            $teams = $TeamRepo->searchTeamByName($search);
-            $events = $EventRepo->searchEventByName($search);
-            $sujets = $SujetRepo->searchSujetByTitle($search);
-
-            $serializer = new Serializer(array(new ObjectNormalizer()));
-
-            $data = $serializer->normalize($users);
-            $data = $serializer->normalize($teams);
-            $data = $serializer->normalize($events);
-            $data = $serializer->normalize($sujets);
-
-            return new JsonResponse($data);
-        }   
-
         if($form_search->isSubmitted() && $form_search->isValid()){
             $search = $form_search->getData('search');
             $search = $search['search'];
@@ -76,12 +55,4 @@ class SearchController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-    * @Route("/search_ajax", name="app_search_ajax", methods="GET|POST")
-    */
-    /*public function searchAjax(Request $request, UserRepository $UserRepo, TeamRepository $TeamRepo, EvenementRepository $EventRepo, SujetRepository $SujetRepo): JsonResponse
-    {   
-             
-    }*/
 }

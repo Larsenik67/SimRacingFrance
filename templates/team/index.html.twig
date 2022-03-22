@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+
+        {% if search is not defined %}
+    <section class="search_page">
+
+        <h1 class="mb-5">Votre team</h1>
+        
+    </section>
+    {% endif %}
+    <section class="search_page">
+        {% if search is defined %}
+        <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
+        <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
+        {% endif %}
+        <a class="nav_link mr" href="{{ path('app_team_create')}}">Crée une team</a>
+        <div>
+        {{ render ( controller ( 'App\\Controller\\TeamController::searchBar' )) }}
+        </div>
+        <div>
+        <ul>
+        
+        {% if teamresult is defined %}
+        {% for teamresult in teamsearch %}
+
+        <li>{{ teamresult.nom }}</li>
+
+        {% endfor %}
+        {% endif %}
+        {% for team in teams %}
+
+        <li>{{ team.nom }}</li>
+
+        {% endfor %}
+        </ul>
+
+        </div>
+        
+
+        
+    </section>
+</main>
+{% endblock %}
