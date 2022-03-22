@@ -7,43 +7,66 @@
 {% block body %}
 <main class="wrapper">
 
-        {% if search is not defined %}
-    <section class="search_page">
+{% if search is not defined %}
+    {% if equipe is defined %}
+        {% if equipe is not null %}
+            <section class="search_page">
+            <div>
+            <h1>{{ equipe.nom }}</h1>
+                <h2>{{ equipe.description }}</h2>
+                <ul>
+                    {% for jeu in equipe.jeu %}
+                        <li class="mb-5">{{ jeu.nom }}</li>
+                    {% endfor %}
+                </ul>
+                <a class="nav_link mr" href="{{ path('app_team_leave')}}">Quitter la team</a>
+            </div>
 
-        <h1 class="mb-5">Votre team</h1>
-        
-    </section>
+            <div>
+                <a class="nav_link mr" href="{{ path('app_team_event')}}">Les evenement</a>
+                <a class="nav_link mr" href="{{ path('app_team_sujet')}}">Les discussions</a>
+                <a class="nav_link mr" href="{{ path('app_team_user')}}">Les pilotes</a>
+            </div>
+            </section>
+        {% endif %}
     {% endif %}
-    <section class="search_page">
-        {% if search is defined %}
+{% endif %}
+
+<section class="search_page">
+    {% if search is defined %}
         <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
         <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
+    {% endif %}
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if equipe is not defined or equipe is null %}
+            <a class="nav_link mr" href="{{ path('app_team_create')}}">Crée une team</a>
         {% endif %}
-        <a class="nav_link mr" href="{{ path('app_team_create')}}">Crée une team</a>
-        <div>
+    {% endif %}
+
+    <div>
         {{ render ( controller ( 'App\\Controller\\TeamController::searchBar' )) }}
-        </div>
-        <div>
+    </div>
+
+    <div>
         <ul>
-        
-        {% if teamresult is defined %}
-        {% for teamresult in teamsearch %}
+            {% if teamresult is defined %}
+                {% for teamresult in teamsearch %}
+                    <li>{{ teamresult.nom }}</li>
+                {% endfor %}
+            {% endif %}
 
-        <li>{{ teamresult.nom }}</li>
+            {% for team in teams %}
+                <li>{{ team.nom }}</li>
 
-        {% endfor %}
-        {% endif %}
-        {% for team in teams %}
-
-        <li>{{ team.nom }}</li>
-
-        {% endfor %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    {% if equipe is null or equipe is not defined %}
+                        <a class="nav_link mr" href="{{ path('app_team_join', { 'id': team.id } )}}">Rejoindre {{ team.nom }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
         </ul>
-
-        </div>
-        
-
-        
-    </section>
+    </div>
+</section>
 </main>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+<section class="search_page">
+<a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
+<h1>Liste des sujets chez {{ team.nom }}</h1>
+<ul>
+{% for event in events %}
+<li class="mb-5">{{ event.nom }}</li>
+{% endfor %}
+</ul>
+</section>
+</main>
+{% endblock %}

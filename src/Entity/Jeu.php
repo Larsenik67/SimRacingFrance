@@ -44,6 +44,7 @@ class Jeu
      */
 
     public function __toString() {
+        
         return $this->nom;
     }
     private $teams;
