@@ -45,6 +45,17 @@ class SujetRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchSujetByTitle(string $search)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.titre LIKE :search')
+            ->setParameter('search', "%{$search}%")
+            ->orderBy('s.titre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Sujet[] Returns an array of Sujet objects
     //  */

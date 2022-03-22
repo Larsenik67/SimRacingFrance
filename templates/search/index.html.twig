@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
+        
+        {% if users == NULL and teams == NULL and events == NULL and sujets == NULL %}
+        <p>Aucun résultat trouvée..
+        {% else %}
+        {% if users is not null and users is not empty %}
+        <div>
+        <h2>Pilotes:</h2>
+        <hr>
+        <ul>
+        {% for user in users %}
+
+        <li>{{ user.nom }}</li>
+
+        {% endfor %}
+        </ul>
+
+        </div>
+        
+        {% endif %}
+        {% if teams is not null and teams is not empty %}
+        <div>
+        <h2>Team:</h2>
+        <hr>
+        <ul>
+        {% for team in teams %}
+        
+        <li>{{ team.nom }}</li>
+
+        {% endfor %}
+        </ul>
+
+        </div> 
+        {% endif %}
+        {% if events is not null and events is not empty %}
+        <div>
+        <h2>Evenement:</h2>
+        <hr>
+        <ul>
+        {% for event in events %}
+        
+        <li>{{ event.nom }}</li>
+
+        {% endfor %}
+        </ul>
+
+        </div> 
+        {% endif %}
+        {% if sujets is not null and sujets is not empty %}
+        <div>
+        <h2>Discution:</h2>
+        <hr>
+        <ul>
+        {% for sujet in sujets %}
+        
+        <li>{{ sujet.titre }}</li>
+
+        {% endfor %}
+        </ul>
+
+        </div>
+        {% endif %}
+        {% endif %}
+        
+
+        
+    </section>
+</main>
+{% block javascripts %}
+
+{% endblock %}
+
+{% endblock %}

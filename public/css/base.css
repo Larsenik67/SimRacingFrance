@@ -32,8 +32,8 @@ header{
     background-color: #0065DB;
     top: 0;
     right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
+    border-bottom: 0.1em solid black;
 }
 
 .logo{
@@ -46,6 +46,7 @@ header{
     justify-content: space-between;
     align-items: center;
     position: relative;
+    border-bottom: 0.1em solid black;
 }
 
 #menu-links a{
@@ -82,8 +83,20 @@ header{
     position: relative;
 }
 
-.search_bar select{
-    width: 20%;
+.search_bar>form>input{
+    width: 100%;
 }
 
 /***************** HEADER END **************************/
+
+.wrapper{
+    max-width: 90%;
+    margin: auto;
+}
+
+/****************** FOOTER ****************************/
+footer{
+background-color: black;
+margin: 0;
+bottom: 0;
+}

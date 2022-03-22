@@ -11,11 +11,6 @@
         {% block stylesheets %}
             
         {% endblock %}
-
-        {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-        {% endblock %}
     </head>
     <body>
     <!-- Début Header : barre de navigation et logo-->
@@ -56,15 +51,15 @@
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
-            <div class ="search_bar">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Recherchez un pilote, une team ou un évènement...">
-                </div>
+            <div class ="search_bar input-group my-3">
+            {{ render ( controller ( 'App\\Controller\\SearchController::searchBar' )) }}
+                
+                    <!--<input type="text" id="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Recherchez un pilote, une team ou un évènement...">-->
             </div>
         </header>
          <!-- Fin Header-->
         {% block body %}{% endblock %}
-        <footer class="footer-distributed">
+        <footer class="footer">
 
             <div class="footer-left">
 
@@ -136,5 +131,12 @@
             </div>
 
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="{{ 'js/search.js' }}"></script>
+        {% block javascripts %}
+        
+        {% endblock %}
     </body>
 </html>

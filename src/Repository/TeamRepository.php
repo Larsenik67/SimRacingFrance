@@ -45,6 +45,16 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchTeamByName(string $search)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.nom LIKE :search')
+            ->setParameter('search', "%{$search}%")
+            ->orderBy('t.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Team[] Returns an array of Team objects
     //  */

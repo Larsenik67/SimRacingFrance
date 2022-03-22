@@ -1,0 +1,4 @@
+{{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_search'), 'method': 'POST'}) }}
+                {{ form_widget(form.search)}}
+                <div id="livesearch"></div>
+                {{ form_end(form) }}
