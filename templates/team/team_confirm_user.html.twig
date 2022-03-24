@@ -8,10 +8,10 @@
 <main class="wrapper">
 <section class="search_page">
 <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-<h1>Liste des sujets chez {{ app.user.team.nom }}</h1>
+<h1>Liste des pilotes en attente chez {{ app.user.team.nom }}</h1>
 <ul>
-{% for event in app.user.team.evenements %}
-<li class="mb-5">{{ event.nom }}</li>
+{% for user in users %}
+<li class="mb-5">{{ user.nom }} - <a class="nav_link mr" href="{{ path('app_team_confirmation_id', { 'id': user.id } )}}">Accepter</a></li>
 {% endfor %}
 </ul>
 </section>

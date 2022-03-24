@@ -90,6 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_verified_team = false;
+
     public function __toString()
     {
         return $this->nom;
@@ -369,6 +374,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getIsVerifiedTeam(): ?bool
+    {
+        return $this->is_verified_team;
+    }
+
+    public function setIsVerifiedTeam(bool $is_verified_team): self
+    {
+        $this->is_verified_team = $is_verified_team;
 
         return $this;
     }

@@ -72,6 +72,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    public function searchUserConfirmation($teamId, $verified)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.team = :id')
+            ->andWhere('u.is_verified_team = :verified')
+            ->setParameter('id', "$teamId")
+            ->setParameter('verified', "$verified")
+            ->orderBy('u.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

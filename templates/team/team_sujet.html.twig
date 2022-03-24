@@ -8,9 +8,9 @@
 <main class="wrapper">
 <section class="search_page">
 <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-<h1>Liste des sujets chez {{ team.nom }}</h1>
+<h1>Liste des sujets chez {{ app.user.team.nom }}</h1>
 <ul>
-{% for sujet in sujets %}
+{% for sujet in app.user.team.sujets %}
 <li class="mb-5">{{ sujet.titre }}</li>
 {% endfor %}
 </ul>

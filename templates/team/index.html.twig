@@ -8,24 +8,41 @@
 <main class="wrapper">
 
 {% if search is not defined %}
-    {% if equipe is defined %}
-        {% if equipe is not null %}
+    {% if app.user.team is defined and app.user.team is not null %}
+        {% if app.user.isVerifiedTeam == "1"  %}
             <section class="search_page">
             <div>
-            <h1>{{ equipe.nom }}</h1>
-                <h2>{{ equipe.description }}</h2>
+            <h1>{{ app.user.team.nom }}</h1>
+                <h2>{{ app.user.team.description }}</h2>
                 <ul>
-                    {% for jeu in equipe.jeu %}
+                    {% for jeu in app.user.team.jeu %}
                         <li class="mb-5">{{ jeu.nom }}</li>
                     {% endfor %}
                 </ul>
+                {% if app.user.isVerifiedTeam == "1"  %}
+                {% if app.user.roleteam != ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
                 <a class="nav_link mr" href="{{ path('app_team_leave')}}">Quitter la team</a>
+                {% endif %}
+                {% endif %}
             </div>
 
             <div>
                 <a class="nav_link mr" href="{{ path('app_team_event')}}">Les evenement</a>
                 <a class="nav_link mr" href="{{ path('app_team_sujet')}}">Les discussions</a>
                 <a class="nav_link mr" href="{{ path('app_team_user')}}">Les pilotes</a>
+
+                {% if app.user.roleTeam[0] == "ROLE_ADMIN" or app.user.roleTeam[0] == "ROLE_MODO" %}
+                    <a class="nav_link mr" href="{{ path('app_team_confirmation')}}">Les pilotes en attentes ({{ count }})</a>
+                {% endif %}
+
+            </div>
+            </section>
+            {% else %}
+            <section class="search_page">
+            <div>
+            <p>Candidature en attente pour la team :</p>
+            <h1>{{ app.user.team.nom }}</h1>
+                <a class="nav_link mr" href="{{ path('app_team_leave')}}">Annuler la candidature</a>
             </div>
             </section>
         {% endif %}
@@ -39,7 +56,7 @@
     {% endif %}
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {% if equipe is not defined or equipe is null %}
+        {% if app.user.team is not defined or app.user.team is null %}
             <a class="nav_link mr" href="{{ path('app_team_create')}}">Crée une team</a>
         {% endif %}
     {% endif %}
@@ -57,10 +74,10 @@
             {% endif %}
 
             {% for team in teams %}
-                <li>{{ team.nom }}</li>
+                <li><a class="nav_link mr" href="{{ path('app_team_id', { 'id': team.id } )}}">{{ team.nom }}</a></li>
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    {% if equipe is null or equipe is not defined %}
+                    {% if app.user.team is null or app.user.team is not defined %}
                         <a class="nav_link mr" href="{{ path('app_team_join', { 'id': team.id } )}}">Rejoindre {{ team.nom }}</a>
                     {% endif %}
                 {% endif %}
