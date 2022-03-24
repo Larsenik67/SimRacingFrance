@@ -48,7 +48,7 @@ class TeamController extends AbstractController
 
                     $teamId = $team->getId();
                     $verified = false;
-                    $users = $UserRepo->searchUserConfirmation($teamId, $verified);
+                    $users = $UserRepo->searchUserTeamConfirmation($teamId, $verified);
                     $count = count($users);
 
                     return $this->render('team/index.html.twig', [
@@ -80,7 +80,7 @@ class TeamController extends AbstractController
                     ->findOneBy(array('id' => $id));
 
             $verified = true;
-            $users = $UserRepo->searchUserConfirmation($id, $verified);
+            $users = $UserRepo->searchUserTeamConfirmation($id, $verified);
             $count = count($users);
             
             return $this->render('team/team_page.html.twig', [
@@ -317,7 +317,7 @@ class TeamController extends AbstractController
 
                 $teamId = $team->getId();
                 $verified = true;
-                $users = $UserRepo->searchUserConfirmation($teamId, $verified);
+                $users = $UserRepo->searchUserTeamConfirmation($teamId, $verified);
 
                 return $this->render('team/team_user.html.twig', [
                     'users' => $users,
@@ -413,7 +413,7 @@ class TeamController extends AbstractController
         
                     $teamId = $teamAdmin->getId();
                     $verified = false;
-                    $users = $UserRepo->searchUserConfirmation($teamId, $verified);
+                    $users = $UserRepo->searchUserTeamConfirmation($teamId, $verified);
 
                 return $this->render('team/team_confirm_user.html.twig', [
                     'users' => $users,

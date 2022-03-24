@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        <div>
+            <h1>{{ user.nom }}</h1>
+            <h3>{{ user.team.nom }}</h3>
+            <p>{{ user.roleTeam[0] }}</p>
+            <div>
+                <h3>Liste des sujets</h3>
+                <ul>
+                {% for sujet in user.sujets %}
+                <li class="mb-5">{{ sujet.titre }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Liste des events</h3>
+                <ul>
+                {% for event in user.evenement %}
+                <li class="mb-5">{{ event.nom }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        <div>
+            <h1>{{ app.user.nom }}</h1>
+            <h2>{{ app.user.email }}</h2>
+            <h3>{{ app.user.team.nom }}</h3>
+            <p>{{ app.user.roleTeam[0] }}</p>
+            <div>
+                <a class="nav_link mr" href="{{ path('app_profile_edit') }}">Changer ses informations</a>
+                <a class="nav_link mr" href="{{ path('app_forgot_password_request') }}">Changer son mot de passe</a>
+            </div>
+            <div>
+                <h3>Liste des sujets</h3>
+                <ul>
+                {% for sujet in app.user.sujets %}
+                <li class="mb-5">{{ sujet.titre }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Liste des events</h3>
+                <ul>
+                {% for event in app.user.evenement %}
+                <li class="mb-5">{{ event.nom }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

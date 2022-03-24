@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_profile_edit'), 'method': 'POST'}) }}
+                {{ form_label(form.nom, 'Nom de pilote') }}
+                {{ form_widget(form.nom, {'attr': {'placeholder': app.user.nom }})}}
+                {{ form_label(form.email, 'Email') }}
+                {{ form_widget(form.email, {'attr': {'placeholder': app.user.email }})}}
+                {{ form_label(form.jeu, 'Jeu(x)') }}
+                {{ form_widget(form.jeu)}}
+        {{ form_widget(form.submit, { 'label': 'Modifier mes informations' }) }}
+        {{ form_end(form) }}
+    </section>
+</main>
+{% endblock %}

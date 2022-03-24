@@ -35,15 +35,19 @@ class SearchController extends AbstractController
             $teams = $TeamRepo->searchTeamByName($search);
             $events = $EventRepo->searchEventByName($search);
             $sujets = $SujetRepo->searchSujetByTitle($search);
-        }
 
-        return $this->render('search/index.html.twig', [
-            'search' => $search,
-            'users' => $users,
-            'teams' => $teams,
-            'events' => $events,
-            'sujets' => $sujets,
-        ]);
+            return $this->render('search/index.html.twig', [
+                'search' => $search,
+                'users' => $users,
+                'teams' => $teams,
+                'events' => $events,
+                'sujets' => $sujets,
+            ]);
+        } else {
+
+            return $this->redirectToRoute('app_home');
+            
+        }
     }
 
     public function searchBar(Request $request)
