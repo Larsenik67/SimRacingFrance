@@ -22,6 +22,11 @@
                 {% if app.user.isVerifiedTeam == "1"  %}
                 {% if app.user.roleteam != ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
                 <a class="nav_link mr" href="{{ path('app_team_leave')}}">Quitter la team</a>
+                {% elseif app.user.roleteam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
+                <a class="nav_link mr" href="{{ path('app_team_delete')}}">Supprimer la team</a>
+                {% endif %}
+                {% if app.user.roleTeam[0] == "ROLE_ADMIN" %}
+                <a class="nav_link mr" href="{{ path('app_team_edit')}}">Modifier la team</a>
                 {% endif %}
                 {% endif %}
             </div>

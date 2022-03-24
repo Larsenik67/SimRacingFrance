@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_team_edit'), 'method': 'POST'}) }}
+                {{ form_label(form.nom, 'Nom de team' ) }}
+                {{ form_widget(form.nom, {'attr': {'placeholder': app.user.team.nom }})}}
+                {{ form_label(form.description, 'Description') }}
+                {{ form_widget(form.description, {'attr': {'placeholder': app.user.team.description }})}}
+                {{ form_label(form.jeu, 'Jeu(x)') }}
+                {{ form_widget(form.jeu)}}
+        {{ form_widget(form.submit, { 'label': 'Modifier les informations de la team' }) }}
+        {{ form_end(form) }}
+    </section>
+</main>
+{% endblock %}

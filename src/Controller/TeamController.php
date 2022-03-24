@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Form\EditTeamType;
 use App\Form\SearchBarType;
 use App\Form\CreateTeamType;
+use App\Form\DeleteTeamType;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -157,6 +159,128 @@ class TeamController extends AbstractController
             }
         } else {
             return $this->redirectToRoute('app_login');
+        }
+    }
+
+    /**
+     * @Route("/team_edit", name="app_team_edit")
+     */
+    public function teamEdit(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $user = $this->getUser();
+            $team = $user->getTeam();
+            $role = $user->getRoleTeam();
+
+            if ($team != null) {
+
+                if ($role[0] == "ROLE_ADMIN") {
+
+                    $form = $this->createForm(EditTeamType::class);
+                    $form->get('jeu')->setData($team->getJeu());
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+
+                        $nom = $form->getData()->getNom();
+                        $description = $form->getData()->getDescription();
+    
+                        if ($nom){
+                        $team->setNom($nom);
+                        }
+    
+                        if ($description){
+                        $team->setDescription($description);
+                        }
+    
+                        $entityManager->flush();
+    
+                        $this->addFlash('success', "Les informations ont bien été mise à jour !");
+                        return $this->redirectToRoute('app_team');
+                    }
+
+                    return $this->render('team/team_edit.html.twig', [
+                        'form' => $form->createView(),
+                        ]);
+
+                } else {
+    
+                    return $this->redirectToRoute('app_team');
+        
+                }
+
+            } else {
+
+                return $this->redirectToRoute('app_team');
+    
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/team_delete", name="app_team_delete")
+     */
+    public function teamDelete(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepo): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $user = $this->getUser();
+            $team = $user->getTeam();
+            $role = $user->getRoleTeam();
+
+            if ($team != null) {
+
+                if ($role == ["ROLE_ADMIN", "ROLE_FONDATEUR"]) {
+
+                    $form = $this->createForm(DeleteTeamType::class);
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+
+                        $members = $team->getUsers();
+                        foreach ($members as $member){
+
+                            $role = [];
+                            $member->setRoleTeam($role);
+                            $member->setIsVerifiedTeam(false);
+                            $team->removeUser($member);
+
+                        }
+                        
+                        $teamRepo->remove($team);
+                        
+                        $entityManager->flush();
+    
+                        $this->addFlash('success', "Les informations ont bien été mise à jour !");
+                        return $this->redirectToRoute('app_team');
+                    }
+
+                    return $this->render('team/team_delete.html.twig', [
+                        'form' => $form->createView(),
+                        ]);
+
+                } else {
+    
+                    return $this->redirectToRoute('app_team');
+        
+                }
+
+            } else {
+
+                return $this->redirectToRoute('app_team');
+    
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
         }
     }
 
