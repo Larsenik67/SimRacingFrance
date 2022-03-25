@@ -10,12 +10,16 @@
         <div>
             <h1>{{ app.user.nom }}</h1>
             <h2>{{ app.user.email }}</h2>
+            {% if app.user.team != null %}
             <h3>{{ app.user.team.nom }}</h3>
             <p>{{ app.user.roleTeam[0] }}</p>
+            {% endif %}
             <div>
                 <a class="nav_link mr" href="{{ path('app_profile_edit') }}">Changer ses informations</a>
                 <a class="nav_link mr" href="{{ path('app_forgot_password_request') }}">Changer son mot de passe</a>
+                <a class="nav_link mr" href="{{ path('app_profile_disable') }}">Désactiver son compte</a>
             </div>
+            {% if app.user.sujets is not defined %}
             <div>
                 <h3>Liste des sujets</h3>
                 <ul>
@@ -24,6 +28,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
+            {% if app.user.evenement is not defined %}
             <div>
                 <h3>Liste des events</h3>
                 <ul>
@@ -32,6 +38,7 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
         </div>
     </section>
 </main>

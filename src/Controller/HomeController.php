@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Evenement;
-use App\Entity\Sujet;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Entity\Sujet;
+use App\Entity\Evenement;
 use App\Form\SearchBarType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,25 +19,37 @@ class HomeController extends AbstractController
     /**
      * @Route("/home", name="app_home")
      */
-    public function index(ManagerRegistry $doctrine, Request $request): Response
+    public function index(ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
 
-        $form = $this->createForm(SearchBarType::class);
-        $form->handleRequest($request);
-        
-        $events = $doctrine
-                ->getRepository(Evenement::class)
-                ->findAll();
+            $user = $this->getUser();
 
-        $sujets = $doctrine
-                ->getRepository(Sujet::class)
-                ->findAll();
+            if ($user->getStatut() == true) {
+                
+                $user->setStatut(false);
 
-        return $this->render('home/index.html.twig', [
-            'events' => $events,
-            'sujets' => $sujets,
-            'form' => $form->createView(),
-        ]);
+                $entityManager->flush();
+            }
+            
+            $events = $doctrine
+                    ->getRepository(Evenement::class)
+                    ->findAll();
+
+            $sujets = $doctrine
+                    ->getRepository(Sujet::class)
+                    ->findAll();
+
+            return $this->render('home/index.html.twig', [
+                'events' => $events,
+                'sujets' => $sujets,
+            ]);
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
     }
 
     /**

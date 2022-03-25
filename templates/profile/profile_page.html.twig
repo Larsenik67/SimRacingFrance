@@ -9,8 +9,11 @@
     <section class="search_page">
         <div>
             <h1>{{ user.nom }}</h1>
+            {% if user.team != null %}
             <h3>{{ user.team.nom }}</h3>
             <p>{{ user.roleTeam[0] }}</p>
+            {% endif %}
+            {% if user.sujets is not defined %}
             <div>
                 <h3>Liste des sujets</h3>
                 <ul>
@@ -19,6 +22,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
+            {% if user.evenement is not defined %}
             <div>
                 <h3>Liste des events</h3>
                 <ul>
@@ -27,6 +32,7 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
         </div>
     </section>
 </main>

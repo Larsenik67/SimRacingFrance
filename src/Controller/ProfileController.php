@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\EditUserType;
+use App\Form\DisableProfileType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -89,6 +90,50 @@ class ProfileController extends AbstractController
             }
 
             return $this->render('profile/profile_edit.html.twig', [
+            'form' => $form->createView(),
+            ]);
+            
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/profile_disable", name="app_profile_disable")
+     */
+    public function disableUser(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $form = $this->createForm(DisableProfileType::class);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $user = $this->getUser();
+                $team = $user->getTeam();
+                $role = [];
+
+                if ( $team ){
+
+                    $team->removeUser($user);
+                    $user->setIsVerifiedTeam(false);
+                    $user->setRoleTeam($role);
+
+                }
+
+                $user->setStatut(true);
+
+                $entityManager->flush();
+
+                $this->addFlash('success', "Les informations ont bien été mise à jour !");
+                return $this->redirectToRoute('app_logout');
+
+            }
+
+            return $this->render('profile/profile_disable.html.twig', [
             'form' => $form->createView(),
             ]);
             
