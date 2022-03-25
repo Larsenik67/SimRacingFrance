@@ -1,9 +1,8 @@
-
 {% extends 'base.html.twig' %}
- {% block stylesheets %}
- <link rel="stylesheet" href="{{ 'css/home.css' }}">
- <link rel="stylesheet" href="{{ 'css/news.css' }}">
- {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ 'css/home.css' }}">
+    <link rel="stylesheet" href="{{ 'css/news.css' }}">
+{% endblock %}
 {% block body %}
 <main class="wrapper">
     <div class="news">
@@ -11,7 +10,7 @@
     </div>
 </main
 {% block javascripts %}
-<script src="{{ 'js/news.js' }}"></script>
+    <script src="{{ 'js/news.js' }}"></script>
 {% endblock %}
 
 {% endblock %}

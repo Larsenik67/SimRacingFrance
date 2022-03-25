@@ -17,7 +17,7 @@
         <ul>
         {% for user in users %}
 
-        <li>{{ user.nom }}</li>
+        <li><a class="nav_link mr" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a></li>
 
         {% endfor %}
         </ul>
@@ -32,7 +32,7 @@
         <ul>
         {% for team in teams %}
         
-        <li>{{ team.nom }}</li>
+        <li><a class="nav_link mr" href="{{ path('app_team_id', { 'id': team.id }) }}">{{ team.nom }}</a></li>
 
         {% endfor %}
         </ul>

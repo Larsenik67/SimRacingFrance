@@ -34,7 +34,7 @@ class ProfileController extends AbstractController
 
             }
 
-        } elseif ( $id ){
+        } elseif ( $id ) {
 
             $verified = true;
             $user = $UserRepo->searchConfirmedUserById($id, $verified);
@@ -107,35 +107,45 @@ class ProfileController extends AbstractController
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
 
-            $form = $this->createForm(DisableProfileType::class);
-            $form->handleRequest($request);
+            $user = $this->getUser();
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ( $user->getRoleTeam() != ["ROLE_ADMIN", "ROLE_FONDATEUR"] )
+            {
 
-                $user = $this->getUser();
-                $team = $user->getTeam();
-                $role = [];
+                $form = $this->createForm(DisableProfileType::class);
+                $form->handleRequest($request);
 
-                if ( $team ){
+                if ($form->isSubmitted() && $form->isValid()) {
+                    
+                    $team = $user->getTeam();
+                    $role = [];
 
-                    $team->removeUser($user);
-                    $user->setIsVerifiedTeam(false);
-                    $user->setRoleTeam($role);
+                    if ( $team ){
+
+                        $team->removeUser($user);
+                        $user->setIsVerifiedTeam(false);
+                        $user->setRoleTeam($role);
+
+                    }
+
+                    $user->setStatut(true);
+
+                    $entityManager->flush();
+
+                    $this->addFlash('success', "Les informations ont bien été mise à jour !");
+                    return $this->redirectToRoute('app_logout');
 
                 }
 
-                $user->setStatut(true);
+                return $this->render('profile/profile_disable.html.twig', [
+                'form' => $form->createView(),
+                ]);
 
-                $entityManager->flush();
+            } else {
 
-                $this->addFlash('success', "Les informations ont bien été mise à jour !");
-                return $this->redirectToRoute('app_logout');
+                return $this->redirectToRoute('app_login');
 
             }
-
-            return $this->render('profile/profile_disable.html.twig', [
-            'form' => $form->createView(),
-            ]);
             
         } else {
 

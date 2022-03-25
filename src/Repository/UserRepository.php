@@ -65,6 +65,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function searchUserByName(string $search)
     {
         return $this->createQueryBuilder('u')
+            ->where('u.statut = false')
             ->andWhere('u.nom LIKE :search')
             ->setParameter('search', "%{$search}%")
             ->orderBy('u.nom', 'ASC')
@@ -76,6 +77,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->createQueryBuilder('u')
             ->Where('u.isVerified = :verified')
+            ->andWhere('u.statut = false')
             ->andWhere('u.id = :id')
             ->setParameter('id', "$id")
             ->setParameter('verified', "$verified")
