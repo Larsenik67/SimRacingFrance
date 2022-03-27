@@ -76,7 +76,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function searchConfirmedUserById($id, $verified)
     {
         return $this->createQueryBuilder('u')
-            ->Where('u.isVerified = :verified')
+            ->where('u.isVerified = :verified')
             ->andWhere('u.statut = false')
             ->andWhere('u.id = :id')
             ->setParameter('id', "$id")
@@ -85,10 +85,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
+    //Récupère les membres d'une team dont la candidature fut, au choix, acceptée ou en attente
     public function searchUserTeamConfirmation($teamId, $verified)
     {
-        return $this->createQueryBuilder('u')
-            ->where('u.team = :id')
+        return $this->createQueryBuilder('u')   
+            ->where('u.isVerified = false')
+            ->andWhere('u.team = :id')
             ->andWhere('u.is_verified_team = :verified')
             ->setParameter('id', "$teamId")
             ->setParameter('verified', "$verified")

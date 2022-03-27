@@ -228,37 +228,37 @@ class TeamController extends AbstractController
      */
     public function teamDelete(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepo): Response
     {
-        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){ //Vérifie de l'utilisateur est bien connecté
 
-            $user = $this->getUser();
-            $team = $user->getTeam();
-            $role = $user->getRoleTeam();
+            $user = $this->getUser();   //Récupère l'utilisateur
+            $team = $user->getTeam();   //Récupère la team de l'utilisateur
+            $role = $user->getRoleTeam();   //Récupère le role au sein de la team de l'utilisateur
 
-            if ($team != null) {
+            if ($team != null) {    //Vérifie que l'utilisateur fasse bien partie d'une team
 
-                if ($role == ["ROLE_ADMIN", "ROLE_FONDATEUR"]) {
+                if ($role == ["ROLE_ADMIN", "ROLE_FONDATEUR"]) {    //Vérifie que l'utilisateur est bien le propriétaire de la team
 
-                    $form = $this->createForm(DeleteTeamType::class);
-                    $form->handleRequest($request);
+                    $form = $this->createForm(DeleteTeamType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
+                    $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
 
-                    if ($form->isSubmitted() && $form->isValid()) {
+                    if ($form->isSubmitted() && $form->isValid()) { //Vérifie que le formulaire est soumis et valide
 
-                        $members = $team->getUsers();
-                        foreach ($members as $member){
-
-                            $role = [];
-                            $member->setRoleTeam($role);
-                            $member->setIsVerifiedTeam(false);
-                            $team->removeUser($member);
+                        $members = $team->getUsers();   //Récupère les membres de la team définie plus haut
+                        foreach ($members as $member){  //Pour chaque membres de la team:
+                                                        
+                            $role = [];                 
+                            $member->setRoleTeam($role);    //Crée la requete qui supprimera le role de l'utilisateur au sein de la team
+                            $member->setIsVerifiedTeam(false);  //Crée la requete qui supprimera la validation de candidature de l'utilisateur au sein de la team
+                            $team->removeUser($member);     //Crée la requete qui supprimera l'utilisateur de la team
 
                         }
                         
-                        $teamRepo->remove($team);
+                        $teamRepo->remove($team);   //Crée la requete qui supprimera la team
                         
-                        $entityManager->flush();
+                        $entityManager->flush();    //Envois la requete en base de donnée
     
-                        $this->addFlash('success', "Les informations ont bien été mise à jour !");
-                        return $this->redirectToRoute('app_team');
+                        $this->addFlash('success', "La team a bien été supprimé");  //Ajoute un message qui sera afficher
+                        return $this->redirectToRoute('app_team');  //Redirection vers /team 
                     }
 
                     return $this->render('team/team_delete.html.twig', [

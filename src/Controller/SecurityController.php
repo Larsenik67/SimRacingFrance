@@ -109,11 +109,11 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
-        if ($this->getUser()) {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
 
             return $this->redirectToRoute('app_home');
             
-        }
+        } else {
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -121,6 +121,8 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        
+        }
     }
 
     /**

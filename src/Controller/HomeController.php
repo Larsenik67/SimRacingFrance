@@ -31,7 +31,8 @@ class HomeController extends AbstractController
 
                 $entityManager->flush();
             }
-            
+        }
+
             $events = $doctrine
                     ->getRepository(Evenement::class)
                     ->findAll();
@@ -44,12 +45,6 @@ class HomeController extends AbstractController
                 'events' => $events,
                 'sujets' => $sujets,
             ]);
-
-        } else {
-
-            return $this->redirectToRoute('app_login');
-
-        }
     }
 
     /**

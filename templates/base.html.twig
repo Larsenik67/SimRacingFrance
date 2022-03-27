@@ -22,8 +22,6 @@
                 <div id="menu-links">
 
                     <a class="nav_link mr" href="{{ path('app_home')}}">Accueil</a>
-                    <a class="nav_link mr" href="{{ path('app_profile')}}">Profile</a>
-                    <a class="nav_link mr" href="">Messagerie</a>
                     <a class="nav_link mr" href="{{ path('app_news')}}">News</a>
                     <a class="nav_link mr" href="">Discussions</a>
                     <a class="nav_link mr" href="{{ path('app_team')}}">Teams</a>
@@ -31,9 +29,12 @@
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
+                    <a class="nav_link mr" href="{{ path('app_profile')}}">Profile</a>
+                    <a class="nav_link mr" href="">Messagerie</a>
+
                     {% if is_granted('ROLE_ADMIN') %} 
 
-                    <a class="nav_link mr" href="">Admin</a>
+                    <a class="nav_link mr" href="{{ path('admin')}}">Admin</a>
                     
                     {% endif %}
 
