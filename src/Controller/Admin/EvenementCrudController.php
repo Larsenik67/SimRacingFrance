@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Evenement;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -26,6 +28,13 @@ class EvenementCrudController extends AbstractCrudController
             AssociationField::new('jeu', 'Jeu'),
             AssociationField::new('team', 'Team'),
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+    return $actions
+
+        ->disable(Action::NEW);
     }
 
 }

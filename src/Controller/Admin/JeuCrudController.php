@@ -19,7 +19,8 @@ class JeuCrudController extends AbstractCrudController
 
         $fields = [
             TextField::new('nom', 'Nom'),
-            ImageField::new('icone', 'Icone')->setBasePath('public\img\jeux')->setUploadDir('public\img\jeux')->setFormTypeOption('allow_delete', false),
+            ImageField::new('icone', 'Icone')->onlyOnIndex()->setBasePath('public\img\jeux'),
+            ImageField::new('icone', 'Icone')->onlyOnForms()->setUploadDir('public\img\jeux')->setFormTypeOption('allow_delete', false),
         ];
 
         return $fields;

@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Messages;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -26,6 +28,13 @@ class MessagesCrudController extends AbstractCrudController
             DateTimeField::new('dateTime', "Date et heure"),
             BooleanField::new('statut', 'Désactiver le message'),
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+    return $actions
+
+        ->disable(Action::NEW);
     }
     
 }
