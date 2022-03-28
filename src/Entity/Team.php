@@ -50,6 +50,14 @@ class Team
      */
     private $jeu;
 
+    public function __toString()
+    {
+        if(is_null($this->nom)) {
+        return 'NULL';
+    }
+        return $this->nom;
+    }
+
     public function __construct()
     {
         $this->users = new ArrayCollection();

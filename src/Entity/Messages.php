@@ -44,6 +44,11 @@ class Messages
      */
     private $user;
 
+    public function __toString() {
+        
+        return $this->contenu;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

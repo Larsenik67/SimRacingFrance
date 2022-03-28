@@ -2,11 +2,20 @@
 
 namespace App\Controller\Admin;
 
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use App\Entity\Jeu;
+use App\Entity\Team;
+use App\Entity\User;
+use App\Entity\Sujet;
+use App\Entity\Messages;
+use App\Entity\Evenement;
+use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+
 
 class DashboardController extends AbstractDashboardController
 {
@@ -15,7 +24,8 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+        return $this->redirect($routeBuilder->setController(UserCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -26,7 +36,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fa fa-file-pdf', User::class);
+        yield MenuItem::linkToCrud('Teams', 'fa fa-file-pdf', Team::class);
+        yield MenuItem::linkToCrud('Evenements', 'fa fa-file-pdf', Evenement::class);
+        yield MenuItem::linkToCrud('Sujets', 'fa fa-file-pdf', Sujet::class);
+        yield MenuItem::linkToCrud('Réponses aux sujets', 'fa fa-file-pdf', Messages::class);
+        yield MenuItem::linkToCrud('Jeux', 'fa fa-file-pdf', Jeu::class);
     }
 }

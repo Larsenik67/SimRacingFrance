@@ -42,12 +42,12 @@ class Jeu
     /**
      * @ORM\ManyToMany(targetEntity=Team::class, mappedBy="jeu")
      */
+    private $teams;
 
     public function __toString() {
         
         return $this->nom;
     }
-    private $teams;
 
     public function __construct()
     {
