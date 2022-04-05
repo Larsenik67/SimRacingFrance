@@ -11,7 +11,7 @@
 <h1>Liste des sujets chez {{ app.user.team.nom }}</h1>
 <ul>
 {% for event in app.user.team.evenements %}
-<li class="mb-5">{{ event.nom }}</li>
+<li><a class="nav_link mr" href="{{ path('app_event_id', { 'id': event.id } )}}">{{ event.nom }}</a></li>
 {% endfor %}
 </ul>
 </section>

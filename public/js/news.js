@@ -14,6 +14,8 @@ $.ajax(settings).done(function (response) {
 
 	var path = window.location.pathname
 
+	console.log(path)
+
 	for(var i=0; i < response.articles.length; i++){ 
 		
 		
@@ -24,7 +26,7 @@ $.ajax(settings).done(function (response) {
 		let titre = response.articles[i].title
 		
 
-		if (path == "/home"){
+		if ( path.startsWith("/home") || path.startsWith("/admin") ){
 
 			if(titre.length > 90) titre = titre.substring(0,90) + "..."
 
@@ -40,7 +42,7 @@ $.ajax(settings).done(function (response) {
 				 "</p></div></div></li></a>"
 			)
 
-		} else if (path == "/news"){
+		} else if ( path.startsWith("/news") ){
 
 			if(titre.length > 250) titre = titre.substring(0,250) + "..."
 
