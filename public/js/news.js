@@ -26,7 +26,7 @@ $.ajax(settings).done(function (response) {
 		let titre = response.articles[i].title
 		
 
-		if ( path.startsWith("/home") || path.startsWith("/admin") ){
+		if ( path.startsWith("/home") || path.startsWith("/admin") || path == "/"){
 
 			if(titre.length > 90) titre = titre.substring(0,90) + "..."
 
