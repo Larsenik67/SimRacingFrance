@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_event_edit', { 'id': event.id }), 'method': 'POST'}) }}
+                {{ form_label(form.nom, "Nom de l'évènement" ) }}
+                {{ form_widget(form.nom, {'attr': {'placeholder': event.nom }})}}
+                {{ form_label(form.description, 'Description') }}
+                {{ form_widget(form.description, {'attr': {'placeholder': event.description }})}}
+                {{ form_label(form.nbPlace, 'Nombre de places') }}
+                {{ form_widget(form.nbPlace, {'attr': {'placeholder': event.nbPlace }})}}
+                {{ form_label(form.dateTime, "Heure et date de l'évènement" ) }}
+                {{ form_widget(form.dateTime, { 'attr': {'placeholder': event.dateTime.format('H:i') }})}}
+                {{ form_label(form.jeu, 'Jeu(x)') }}
+                {{ form_widget(form.jeu)}}
+        {{ form_widget(form.submit, { 'label': 'Modifier les informations de la team' }) }}
+        {{ form_end(form) }}
+    </section>
+</main>
+{% endblock %}

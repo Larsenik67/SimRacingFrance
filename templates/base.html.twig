@@ -25,7 +25,7 @@
                     <a class="nav_link mr" href="{{ path('app_news')}}">News</a>
                     <a class="nav_link mr" href="">Discussions</a>
                     <a class="nav_link mr" href="{{ path('app_team')}}">Teams</a>
-                    <a class="nav_link mr" href="">Évènements</a>
+                    <a class="nav_link mr" href="{{ path('app_event')}}">Évènements</a>
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
@@ -64,23 +64,24 @@
 
             <div class="footer-left">
 
-                <h3 class="police_logo"><strong>LA PERLE BLEUE</strong></h3>
+                <h3 class="police_logo my-5"><strong>SimRacing France</strong></h3>
 
                 <p class="footer-links">
 
                     <a class="nav_link mr" href="{{ path('app_home')}}">Accueil</a>
-                    <a class="nav_link mr" href="">Profile</a>
-                    <a class="nav_link mr" href="">Messagerie</a>
-                    <a class="nav_link mr" href="}">News</a>
+                    <a class="nav_link mr" href="{{ path('app_news')}}">News</a>
                     <a class="nav_link mr" href="">Discussions</a>
-                    <a class="nav_link mr" href="">Teams</a>
-                    <a class="nav_link mr" href="">Évènements</a>
+                    <a class="nav_link mr" href="{{ path('app_team')}}">Teams</a>
+                    <a class="nav_link mr" href="{{ path('app_event')}}">Évènements</a>
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
+                    <a class="nav_link mr" href="{{ path('app_profile')}}">Profile</a>
+                    <a class="nav_link mr" href="">Messagerie</a>
+
                     {% if is_granted('ROLE_ADMIN') %} 
 
-                    <a class="nav_link mr" href="">Admin</a>
+                    <a class="nav_link mr" href="{{ path('admin')}}">Admin</a>
                     
                     {% endif %}
 

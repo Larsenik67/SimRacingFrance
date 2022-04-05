@@ -42,5 +42,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Sujets', 'fa fa-file-pdf', Sujet::class);
         yield MenuItem::linkToCrud('Réponses aux sujets', 'fa fa-file-pdf', Messages::class);
         yield MenuItem::linkToCrud('Jeux', 'fa fa-file-pdf', Jeu::class);
+        yield MenuItem::linkToRoute('Retourner sur le site', 'fa fa-file-pdf', 'app_home');
     }
 }

@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            // génère une URL signé et l'envois par email a l'utilisateur
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('simracingfrance@gmail.com', 'SimRacingFrance Mail'))
@@ -61,7 +61,6 @@ class SecurityController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
             $this->addFlash('success', "Le compte a été crée, veuillez consulter l'adresse email fournis");
             return $this->redirectToRoute('app_login');

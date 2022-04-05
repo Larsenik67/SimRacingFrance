@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+{{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_event_create'), 'method': 'POST'}) }}
+{{ form_label(form.nom, "Nom de l'évènement" ) }}
+{{ form_widget(form.nom, { 'label': "Nom de l'évènement" }) }}
+{{ form_label(form.description, "Description de l'évènement" ) }}
+{{ form_widget(form.description, { 'label': "Description de l'évènement" }) }}
+{{ form_label(form.nbPlace, 'Nombre de places' ) }}
+{{ form_widget(form.nbPlace, { 'label': 'Nombre de places' }) }}
+{{ form_label(form.dateTime, "Heure et date de l'évènement" ) }}
+{{ form_widget(form.dateTime, { 'label': "Heure et date de l'évènement" }) }}
+{{ form_label(form.nom, 'Jeu:' ) }}
+{{ form_widget(form.jeu, { 'label': 'jeu' }) }}
+{{ form_widget(form.submit, { 'label': "Crée l'évènement" }) }}
+                {{ form_end(form) }}
+                </section>
+                </main>
+{% endblock %}

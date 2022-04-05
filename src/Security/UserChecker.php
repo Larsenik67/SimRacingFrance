@@ -3,9 +3,9 @@
 namespace App\Security;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 
 class UserChecker implements UserCheckerInterface
 {
@@ -18,11 +18,19 @@ class UserChecker implements UserCheckerInterface
     }
 
     public function checkPostAuth(UserInterface $user): void
-    {
+    { 
+        
+        $ban = $user->getBan();
+        $today = new \DateTime();
 
-        if ($user->getIsVerified() == 0) {
-            // the message passed to this exception is meant to be displayed to the user
+        if( $ban > $today ){
+        
+            throw new CustomUserMessageAccountStatusException("Vous êtes bannis jusqu'au ".$ban->format('d/m/Y')."");
+
+        } elseif ( $user->getIsVerified() == 0 ) {
+
             throw new CustomUserMessageAccountStatusException('Veuillez validez votre email');
+
         }
     }
 }
