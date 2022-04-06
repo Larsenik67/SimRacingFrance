@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Entity\Sujet;
 use App\Form\EditTeamType;
 use App\Form\SearchBarType;
 use App\Form\CreateTeamType;
 use App\Form\DeleteTeamType;
+use App\Form\CreateSujetType;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -776,5 +778,51 @@ class TeamController extends AbstractController
 
         }
 
+    }
+
+    /**
+     * @Route("/team_sujet_create", name="app_team_sujet_create")
+     */
+    public function sujetForm(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $user = $this->getUser();
+            $team = $user->getTeam();
+
+            if ($team != null) {
+
+                $sujet = new Sujet();
+                $form = $this->createForm(CreateSujetType::class, $sujet);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $sujet->setUser($user);
+                    $sujet->setTeam($team);
+                    $sujet->setStatut(false);
+                    $sujet->setClosed(false);
+
+                    $entityManager->persist($sujet);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $sujet->getId()]);
+                }
+
+                return $this->render('team/create_sujet.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_team');
+    
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
     }
 }

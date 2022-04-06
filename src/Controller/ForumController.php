@@ -147,31 +147,42 @@ class ForumController extends AbstractController
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
 
-            $response = new Messages();
-            $form = $this->createForm(CreateResponseType::class, $response);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $sujet = $doctrine
+            $sujet = $doctrine
                         ->getRepository(Sujet::class)
                         ->findOneBy(array('id' => $id));
 
-                $user = $this->getUser();
-                $response->setUser($user);
-                $response->setSujet($sujet);
-                $response->setStatut(false);
+            $user = $this->getUser();
+            $teamSujet = $sujet->getTeam();
+            $teamUser = $user->getTeam();
 
-                $entityManager->persist($response);
-                $entityManager->flush();
+            if ( $teamSujet == null || $teamSujet == $teamUser){
 
-                return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+                $response = new Messages();
+                $form = $this->createForm(CreateResponseType::class, $response);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $response->setUser($user);
+                    $response->setSujet($sujet);
+                    $response->setStatut(false);
+
+                    $entityManager->persist($response);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+                }
+
+                return $this->render('forum/create_response.html.twig', [
+                    'form' => $form->createView(),
+                    'id' => $id,
+                ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_forum');
+
             }
-
-            return $this->render('forum/create_response.html.twig', [
-                'form' => $form->createView(),
-                'id' => $id,
-            ]);
 
         } else {
 

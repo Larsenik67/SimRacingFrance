@@ -8,6 +8,7 @@
 <main class="wrapper">
 <section class="search_page">
 <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
+<a class="nav_link mr" href="{{ path('app_team_sujet_create')}}">Créer un nouveau sujet</a>
 <h1>Liste des sujets chez {{ app.user.team.nom }}</h1>
 <ul>
 {% for sujet in app.user.team.sujets %}
