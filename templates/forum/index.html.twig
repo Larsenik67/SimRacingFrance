@@ -8,6 +8,10 @@
 <main class="wrapper">
 
 <section class="search_page">
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="nav_link mr" href="{{ path('app_forum_create')}}">Crée un sujet</a>
+    {% endif %}
     {% if search is defined %}
         <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
         <a class="nav_link mr" href="{{ path('app_forum')}}">Retour</a>
@@ -26,7 +30,9 @@
             {% endif %}
 
             {% for sujet in sujets %}
+            {% if sujet.team is null %}
                 <li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>

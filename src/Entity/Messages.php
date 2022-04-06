@@ -62,6 +62,7 @@ class Messages
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
+        $this->setDateTime(new \DateTime());
 
         return $this;
     }

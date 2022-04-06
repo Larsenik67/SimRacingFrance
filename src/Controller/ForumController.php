@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Sujet;
+use App\Entity\Messages;
 use App\Form\SearchBarType;
+use App\Form\CreateSujetType;
+use App\Form\CreateResponseType;
 use App\Repository\SujetRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +39,38 @@ class ForumController extends AbstractController
             $sujet = $doctrine
                     ->getRepository(Sujet::class)
                     ->findOneBy(array('id' => $id));
+            $teamSujet = $sujet->getTeam();
+
+            if ( $teamSujet == null ){
             
-            return $this->render('forum/forum_page.html.twig', [
-                'sujet' => $sujet,
-            ]);
+                return $this->render('forum/forum_page.html.twig', [
+                    'sujet' => $sujet,
+                ]);
+
+            } elseif ( $teamSujet != null ) {
+
+                if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+                    $teamUser = $this->getUser()->getTeam();
+
+                    if ($teamSujet == $teamUser){
+                        
+                        return $this->render('forum/forum_page.html.twig', [
+                        'sujet' => $sujet,
+                        ]);
+
+                    } else {
+
+                        return $this->redirectToRoute('app_forum');
+
+                    }
+
+                } else {
+        
+                    return $this->redirectToRoute('app_login');
+        
+                }
+            }
         }
     }
 
@@ -71,5 +103,80 @@ class ForumController extends AbstractController
         return $this->render('forum/search.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/forum_create", name="app_forum_create")
+     */
+    public function sujetForm(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $sujet = new Sujet();
+            $form = $this->createForm(CreateSujetType::class, $sujet);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $user = $this->getUser();
+                $sujet->setUser($user);
+                $sujet->setStatut(false);
+                $sujet->setClosed(false);
+
+                $entityManager->persist($sujet);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_forum_id', ['id' => $sujet->getId()]);
+            }
+
+            return $this->render('forum/create_sujet.html.twig', [
+                'form' => $form->createView(),
+            ]);
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_response/{id}", name="app_forum_response")
+     */
+    public function responseForm($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $response = new Messages();
+            $form = $this->createForm(CreateResponseType::class, $response);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $sujet = $doctrine
+                        ->getRepository(Sujet::class)
+                        ->findOneBy(array('id' => $id));
+
+                $user = $this->getUser();
+                $response->setUser($user);
+                $response->setSujet($sujet);
+                $response->setStatut(false);
+
+                $entityManager->persist($response);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+            }
+
+            return $this->render('forum/create_response.html.twig', [
+                'form' => $form->createView(),
+                'id' => $id,
+            ]);
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
     }
 }

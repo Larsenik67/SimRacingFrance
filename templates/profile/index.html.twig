@@ -19,22 +19,22 @@
                 <a class="nav_link mr" href="{{ path('app_forgot_password_request') }}">Changer son mot de passe</a>
                 <a class="nav_link mr" href="{{ path('app_profile_disable') }}">Désactiver son compte</a>
             </div>
-            {% if app.user.sujets is not defined %}
+            {% if app.user.sujets is defined %}
             <div>
                 <h3>Liste des sujets</h3>
                 <ul>
                 {% for sujet in app.user.sujets %}
-                <li class="mb-5">{{ sujet.titre }}</li>
+                <li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
             {% endif %}
-            {% if app.user.evenement is not defined %}
+            {% if app.user.evenement is defined %}
             <div>
                 <h3>Liste des events</h3>
                 <ul>
                 {% for event in app.user.evenement %}
-                <li class="mb-5">{{ event.nom }}</li>
+                <li><a class="nav_link mr" href="{{ path('app_event_id', { 'id': event.id } )}}">{{ event.nom }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
