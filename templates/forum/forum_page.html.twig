@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+<section class="search_page">
+            <div>
+            <h1>{{ sujet.titre }}</h1>
+                <h2>{{ sujet.description }}</h2>
+                <h3>{{ sujet.user.nom }}</h3>
+                <h4>{{ sujet.dateTime|date('d/m/y H:i') }}</h4>
+                <p>{{ sujet.contenu }}</p>
+                <div>
+                <ul>
+                    {% for reponse in sujet.messages %}
+                        <li class="mb-5">
+                        {{ reponse.user.nom }} </br>
+                        <p>{{ reponse.contenu }}</p> </br>
+                        {{ reponse.dateTime|date('d/m/y H:i') }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+</section>
+</main>
+{% endblock %}
