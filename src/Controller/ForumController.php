@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Sujet;
 use App\Entity\Messages;
+use App\Form\EditSujetType;
 use App\Form\SearchBarType;
 use App\Form\CreateSujetType;
 use App\Form\CreateResponseType;
@@ -176,6 +177,62 @@ class ForumController extends AbstractController
                 return $this->render('forum/create_response.html.twig', [
                     'form' => $form->createView(),
                     'id' => $id,
+                ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_forum');
+
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_edit/{id}", name="app_forum_edit")
+     */
+    public function editSujetForm($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $sujet = $doctrine
+                        ->getRepository(Sujet::class)
+                        ->findOneBy(array('id' => $id));
+
+            $user = $this->getUser();
+            $userSujet = $sujet->getUser();
+
+            if ( $user == $userSujet ){
+
+                $form = $this->createForm(EditSujetType::class);
+                $form->get('titre')->setData($sujet->getTitre());
+                $form->get('description')->setData($sujet->getDescription());
+                $form->get('contenu')->setData($sujet->getContenu());
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $titre = $form->getData()->getTitre();
+                    $description = $form->getData()->getDescription();
+                    $contenu = $form->getData()->getContenu();
+
+                    $sujet->setTitre($titre);
+                    $sujet->setDescription($description);
+                    $sujet->setContenu($contenu);
+
+                    $entityManager->persist($sujet);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+                }
+
+                return $this->render('forum/forum_edit.html.twig', [
+                    'form' => $form->createView(),
+                    'sujet' => $sujet,
                 ]);
 
             } else {

@@ -9,6 +9,9 @@
 <section class="search_page">
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a class="nav_link mr" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
+        {% if sujet.user == app.user %}
+        <a class="nav_link mr" href="{{ path('app_forum_edit', { 'id': sujet.id } )}}">Editer</a>
+        {% endif %}
     {% endif %}
             <div>
             <h1>{{ sujet.titre }}</h1>
