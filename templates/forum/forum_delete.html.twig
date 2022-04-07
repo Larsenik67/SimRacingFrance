@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+    <h1>Voulez vous vraiment supprimer le sujet "{{ sujet.titre }}" ?</h1>
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_delete', { 'id': sujet.id }), 'method': 'POST'}) }}
+        {{ form_widget(form.submit, { 'label': 'Supprimer le sujet' }) }}
+        {{ form_end(form) }}
+    </section>
+</main>
+{% endblock %}

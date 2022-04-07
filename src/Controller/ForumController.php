@@ -7,8 +7,12 @@ use App\Entity\Messages;
 use App\Form\EditSujetType;
 use App\Form\SearchBarType;
 use App\Form\CreateSujetType;
+use App\Form\DeleteSujetType;
+use App\Form\EditMessageType;
+use App\Form\DeleteMessageType;
 use App\Form\CreateResponseType;
 use App\Repository\SujetRepository;
+use App\Repository\MessagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -233,6 +237,163 @@ class ForumController extends AbstractController
                 return $this->render('forum/forum_edit.html.twig', [
                     'form' => $form->createView(),
                     'sujet' => $sujet,
+                ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_forum');
+
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_delete/{id}", name="app_forum_delete")
+     */
+    public function sujetDelete($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, SujetRepository $sujetRepo, MessagesRepository $messageRepo): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){ //Vérifie de l'utilisateur est bien connecté
+
+            $user = $this->getUser();   //Récupère l'utilisateur
+
+            $sujet = $doctrine                              //Récupère le sujet a supprimer
+                    ->getRepository(Sujet::class)
+                    ->findOneBy(array('id' => $id));
+
+            $sujetUser = $sujet->getUser();  //Récupère l'auteur du sujet
+                
+            if ($user == $sujetUser) {    //Vérifie que l'utilisateur est bien l'auteur du sujet
+
+                $form = $this->createForm(DeleteSujetType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
+                $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
+
+                if ($form->isSubmitted() && $form->isValid()) { //Vérifie que le formulaire est soumis et valide
+
+                    $messages = $sujet->getMessages();   //Récupère les messages du sujet
+                    foreach ($messages as $message){  //Pour chaque message :
+                                                        
+                        $messageRepo->remove($message);     //Crée la requete qui supprimera le message
+
+                    }
+                    
+                    $sujetRepo->remove($sujet);   //Crée la requete qui supprimera le sujet
+                    
+                    $entityManager->flush();    //Envois la requete en base de donnée
+
+                    $this->addFlash('success', "Le sujet a bien été supprimé");  //Ajoute un message qui sera afficher
+                    return $this->redirectToRoute('app_forum');  //Redirection vers /forum
+                }
+
+                return $this->render('forum/forum_delete.html.twig', [
+                    'sujet' => $sujet,
+                    'form' => $form->createView(),
+                    ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_forum');
+    
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_message_delete/{id}", name="app_forum_message_delete")
+     */
+    public function messageDelete($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, MessagesRepository $messageRepo): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){ //Vérifie de l'utilisateur est bien connecté
+
+            $user = $this->getUser();   //Récupère l'utilisateur
+
+            $message = $doctrine                              //Récupère le message a supprimer
+                    ->getRepository(Messages::class)
+                    ->findOneBy(array('id' => $id));
+            
+            $sujetId = $message->getSujet()->getId();
+
+            $messageUser = $message->getUser();  //Récupère l'auteur du sujet
+                
+            if ($user == $messageUser) {    //Vérifie que l'utilisateur est bien l'auteur du sujet
+
+                $form = $this->createForm(DeleteMessageType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
+                $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
+
+                if ($form->isSubmitted() && $form->isValid()) { //Vérifie que le formulaire est soumis et valide
+                                                        
+                    $messageRepo->remove($message);     //Crée la requete qui supprimera le message
+                    
+                    $entityManager->flush();    //Envois la requete en base de donnée
+
+                    $this->addFlash('success', "Le message a bien été supprimé");  //Ajoute un message qui sera afficher
+                    return $this->redirectToRoute('app_forum_id', ['id' => $sujetId]);  //Redirection vers /forum
+                }
+
+                return $this->render('forum/forum_message_delete.html.twig', [
+                    'message' => $message,
+                    'form' => $form->createView(),
+                    ]);
+
+            } else {
+
+                return $this->redirectToRoute('app_forum');
+    
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_message_edit/{id}", name="app_forum_message_edit")
+     */
+    public function editMessageForm($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $message = $doctrine
+                        ->getRepository(Messages::class)
+                        ->findOneBy(array('id' => $id));
+
+            $user = $this->getUser();
+            $userMessage = $message->getUser();
+
+            if ( $user == $userMessage ){
+
+                $form = $this->createForm(EditMessageType::class);
+                $form->get('contenu')->setData($message->getContenu());
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $sujetId = $message->getSujet()->getId();
+
+                    $contenu = $form->getData()->getContenu();
+
+                    $message->setContenu($contenu);
+
+                    $entityManager->persist($message);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $sujetId]);
+                }
+
+                return $this->render('forum/forum_message_edit.html.twig', [
+                    'form' => $form->createView(),
+                    'message' => $message,
                 ]);
 
             } else {

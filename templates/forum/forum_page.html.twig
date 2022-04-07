@@ -11,6 +11,7 @@
         <a class="nav_link mr" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
         {% if sujet.user == app.user %}
         <a class="nav_link mr" href="{{ path('app_forum_edit', { 'id': sujet.id } )}}">Editer</a>
+        <a class="nav_link mr" href="{{ path('app_forum_delete', { 'id': sujet.id } )}}">Supprimer</a>
         {% endif %}
     {% endif %}
             <div>
@@ -23,7 +24,14 @@
                 <ul>
                     {% for reponse in sujet.messages %}
                         <li class="mb-5">
-                        {{ reponse.user.nom }} </br>
+                        {{ reponse.user.nom }} 
+                        
+                        {% if reponse.user == app.user %}
+                        <a class="nav_link mr" href="{{ path('app_forum_message_edit', { 'id': reponse.id } )}}">Editer</a>
+                        <a class="nav_link mr" href="{{ path('app_forum_message_delete', { 'id': reponse.id } )}}">Supprimer</a>
+                        {% endif %}
+
+                        </br>
                         <p>{{ reponse.contenu }}</p> </br>
                         {{ reponse.dateTime|date('d/m/y H:i') }}
                         </li>
