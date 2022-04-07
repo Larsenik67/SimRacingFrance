@@ -208,10 +208,44 @@ class ForumController extends AbstractController
                         ->findOneBy(array('id' => $id));
 
             $user = $this->getUser();
-            $userSujet = $sujet->getUser();
+            $userSujet = $sujet->getUser()->getId();
 
-            if ( $user == $userSujet ){
+            $userId = $user->getId();
+            $userTeam = $user->getTeam();
+            $userRole = $user->getRoleTeam();
+            $sujetTeam = $sujet->getTeam();
 
+            if ( $userId == $userSujet ){
+
+                $form = $this->createForm(EditSujetType::class);
+                $form->get('titre')->setData($sujet->getTitre());
+                $form->get('description')->setData($sujet->getDescription());
+                $form->get('contenu')->setData($sujet->getContenu());
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $titre = $form->getData()->getTitre();
+                    $description = $form->getData()->getDescription();
+                    $contenu = $form->getData()->getContenu();
+
+                    $sujet->setTitre($titre);
+                    $sujet->setDescription($description);
+                    $sujet->setContenu($contenu);
+
+                    $entityManager->persist($sujet);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+                }
+
+                return $this->render('forum/forum_edit.html.twig', [
+                    'form' => $form->createView(),
+                    'sujet' => $sujet,
+                ]);
+
+            } elseif ($userTeam == $sujetTeam && $userRole[0] == "ROLE_MODO" || $userTeam == $sujetTeam && $userRole[0] == "ROLE_ADMIN" ) {
+                
                 $form = $this->createForm(EditSujetType::class);
                 $form->get('titre')->setData($sujet->getTitre());
                 $form->get('description')->setData($sujet->getDescription());
@@ -266,9 +300,40 @@ class ForumController extends AbstractController
                     ->findOneBy(array('id' => $id));
 
             $sujetUser = $sujet->getUser();  //Récupère l'auteur du sujet
+
+            $userTeam = $user->getTeam();
+            $userRole = $user->getRoleTeam();
+            $sujetTeam = $sujet->getTeam();
                 
             if ($user == $sujetUser) {    //Vérifie que l'utilisateur est bien l'auteur du sujet
 
+                $form = $this->createForm(DeleteSujetType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
+                $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
+
+                if ($form->isSubmitted() && $form->isValid()) { //Vérifie que le formulaire est soumis et valide
+
+                    $messages = $sujet->getMessages();   //Récupère les messages du sujet
+                    foreach ($messages as $message){  //Pour chaque message :
+                                                        
+                        $messageRepo->remove($message);     //Crée la requete qui supprimera le message
+
+                    }
+                    
+                    $sujetRepo->remove($sujet);   //Crée la requete qui supprimera le sujet
+                    
+                    $entityManager->flush();    //Envois la requete en base de donnée
+
+                    $this->addFlash('success', "Le sujet a bien été supprimé");  //Ajoute un message qui sera afficher
+                    return $this->redirectToRoute('app_forum');  //Redirection vers /forum
+                }
+
+                return $this->render('forum/forum_delete.html.twig', [
+                    'sujet' => $sujet,
+                    'form' => $form->createView(),
+                    ]);
+
+            } elseif ($userTeam == $sujetTeam && $userRole[0] == "ROLE_MODO" || $userTeam == $sujetTeam && $userRole[0] == "ROLE_ADMIN" ) {
+                
                 $form = $this->createForm(DeleteSujetType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
                 $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
 
@@ -322,10 +387,34 @@ class ForumController extends AbstractController
             
             $sujetId = $message->getSujet()->getId();
 
+            $userTeam = $user->getTeam();
+            $userRole = $user->getRoleTeam();
+            $sujetTeam = $message->getSujet()->getTeam();
+
             $messageUser = $message->getUser();  //Récupère l'auteur du sujet
                 
             if ($user == $messageUser) {    //Vérifie que l'utilisateur est bien l'auteur du sujet
 
+                $form = $this->createForm(DeleteMessageType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
+                $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
+
+                if ($form->isSubmitted() && $form->isValid()) { //Vérifie que le formulaire est soumis et valide
+                                                        
+                    $messageRepo->remove($message);     //Crée la requete qui supprimera le message
+                    
+                    $entityManager->flush();    //Envois la requete en base de donnée
+
+                    $this->addFlash('success', "Le message a bien été supprimé");  //Ajoute un message qui sera afficher
+                    return $this->redirectToRoute('app_forum_id', ['id' => $sujetId]);  //Redirection vers /forum
+                }
+
+                return $this->render('forum/forum_message_delete.html.twig', [
+                    'message' => $message,
+                    'form' => $form->createView(),
+                    ]);
+
+            } elseif ($userTeam == $sujetTeam && $userRole[0] == "ROLE_MODO" || $userTeam == $sujetTeam && $userRole[0] == "ROLE_ADMIN" ) {
+                
                 $form = $this->createForm(DeleteMessageType::class);   //Crée le formulaire a partir du fichier src\Form\DeleteTeamType.php
                 $form->handleRequest($request);     //Inspecte la requete lors de la soumission du formulaire, récupère les données et determine si le formulaire est valide
 
@@ -370,9 +459,38 @@ class ForumController extends AbstractController
 
             $user = $this->getUser();
             $userMessage = $message->getUser();
+            
+            $userTeam = $user->getTeam();
+            $userRole = $user->getRoleTeam();
+            $sujetTeam = $message->getSujet()->getTeam();
 
             if ( $user == $userMessage ){
 
+                $form = $this->createForm(EditMessageType::class);
+                $form->get('contenu')->setData($message->getContenu());
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $sujetId = $message->getSujet()->getId();
+
+                    $contenu = $form->getData()->getContenu();
+
+                    $message->setContenu($contenu);
+
+                    $entityManager->persist($message);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $sujetId]);
+                }
+
+                return $this->render('forum/forum_message_edit.html.twig', [
+                    'form' => $form->createView(),
+                    'message' => $message,
+                ]);
+
+            }  elseif ($userTeam == $sujetTeam && $userRole[0] == "ROLE_MODO" || $userTeam == $sujetTeam && $userRole[0] == "ROLE_ADMIN" ) {
+                
                 $form = $this->createForm(EditMessageType::class);
                 $form->get('contenu')->setData($message->getContenu());
                 $form->handleRequest($request);
