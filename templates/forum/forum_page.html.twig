@@ -8,10 +8,19 @@
 <main class="wrapper">
 <section class="search_page">
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if sujet.closed == 0 %}
         <a class="nav_link mr" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
+        {% endif %}
         {% if sujet.user == app.user or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_ADMIN" or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_MODO"%}
         <a class="nav_link mr" href="{{ path('app_forum_edit', { 'id': sujet.id } )}}">Editer</a>
         <a class="nav_link mr" href="{{ path('app_forum_delete', { 'id': sujet.id } )}}">Supprimer</a>
+        {% endif %}
+        {% if sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_ADMIN" or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_MODO" %}
+        {% if sujet.closed == 0 %}
+        <a class="nav_link mr" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Fermer le sujet</a>
+        {% elseif sujet.closed == 1 %}
+        <a class="nav_link mr" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Réouvrir le sujet</a>
+        {% endif %}
         {% endif %}
     {% endif %}
             <div>

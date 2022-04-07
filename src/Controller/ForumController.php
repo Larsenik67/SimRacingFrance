@@ -6,6 +6,7 @@ use App\Entity\Sujet;
 use App\Entity\Messages;
 use App\Form\EditSujetType;
 use App\Form\SearchBarType;
+use App\Form\CloseSujetType;
 use App\Form\CreateSujetType;
 use App\Form\DeleteSujetType;
 use App\Form\EditMessageType;
@@ -160,7 +161,7 @@ class ForumController extends AbstractController
             $teamSujet = $sujet->getTeam();
             $teamUser = $user->getTeam();
 
-            if ( $teamSujet == null || $teamSujet == $teamUser){
+            if ( $teamSujet == null && $sujet->getClosed() == 0 || $teamSujet == $teamUser && $sujet->getClosed() == 0){
 
                 $response = new Messages();
                 $form = $this->createForm(CreateResponseType::class, $response);
@@ -515,6 +516,64 @@ class ForumController extends AbstractController
                 ]);
 
             } else {
+
+                return $this->redirectToRoute('app_forum');
+
+            }
+
+        } else {
+
+            return $this->redirectToRoute('app_login');
+
+        }
+    }
+
+    /**
+     * @Route("/forum_close/{id}", name="app_forum_close")
+     */
+    public function closeSujetForm($id, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $sujet = $doctrine
+                        ->getRepository(Sujet::class)
+                        ->findOneBy(array('id' => $id));
+
+            $user = $this->getUser();
+            
+            $userTeam = $user->getTeam();
+            $userRole = $user->getRoleTeam();
+            $sujetTeam = $sujet->getTeam();
+
+            if ( $userTeam == $sujetTeam && $userRole[0] == "ROLE_MODO" || $userTeam == $sujetTeam && $userRole[0] == "ROLE_ADMIN" ){
+
+                $form = $this->createForm(CloseSujetType::class);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    if( $sujet->getClosed() == false){
+
+                        $sujet->setClosed(true);
+
+                    } else if ( $sujet->getClosed() == true){
+
+                        $sujet->setClosed(false);
+
+                    }
+
+                    $entityManager->persist($sujet);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_forum_id', ['id' => $id]);
+                }
+
+                return $this->render('forum/forum_close.html.twig', [
+                    'form' => $form->createView(),
+                    'sujet' => $sujet,
+                ]);
+
+            }  else {
 
                 return $this->redirectToRoute('app_forum');
 

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+    {% if sujet.closed == 0 %}
+    <h1>Voulez vous vraiment fermer le sujet "{{ sujet.titre }}" ?</h1>
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_close', { 'id': sujet.id }), 'method': 'POST'}) }}
+        {{ form_widget(form.submit, { 'label': 'Fermer le sujet' }) }}
+        {{ form_end(form) }}
+    {% elseif sujet.closed == 1 %}
+    <h1>Voulez vous vraiment réouvrir le sujet "{{ sujet.titre }}" ?</h1>
+        {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_close', { 'id': sujet.id }), 'method': 'POST'}) }}
+        {{ form_widget(form.submit, { 'label': 'Réouvrir le sujet' }) }}
+        {{ form_end(form) }}
+    {% endif %}
+    </section>
+</main>
+{% endblock %}
