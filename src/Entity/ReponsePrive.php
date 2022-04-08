@@ -52,6 +52,7 @@ class ReponsePrive
     public function setMessage(string $message): self
     {
         $this->message = $message;
+        $this->setDateTime(new \DateTime());
 
         return $this;
     }

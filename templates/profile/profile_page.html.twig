@@ -13,22 +13,25 @@
             <h3>{{ user.team.nom }}</h3>
             <p>{{ user.roleTeam[0] }}</p>
             {% endif %}
-            {% if user.sujets is not defined %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="nav_link mr" href="{{ path('app_private_message_create', { 'id': user.id } )}}">Envoyer un méssage privé</a>
+            {% endif %}
+            {% if user.sujets is defined and user.sujets is not empty  %}
             <div>
                 <h3>Liste des sujets</h3>
                 <ul>
                 {% for sujet in user.sujets %}
-                <li class="mb-5">{{ sujet.titre }}</li>
+                <li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
             {% endif %}
-            {% if user.evenement is not defined %}
+            {% if user.evenement is defined and user.evenement is not empty %}
             <div>
                 <h3>Liste des events</h3>
                 <ul>
                 {% for event in user.evenement %}
-                <li class="mb-5">{{ event.nom }}</li>
+                <li><a class="nav_link mr" href="{{ path('app_event_id', { 'id': event.id } )}}">{{ event.nom }}</a></li>
                 {% endfor %}
                 </ul>
             </div>

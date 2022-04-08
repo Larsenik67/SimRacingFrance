@@ -45,6 +45,24 @@ class MessagePriveRepository extends ServiceEntityRepository
         }
     }
 
+    public function inbox($id)
+    {
+        return $this->createQueryBuilder('mp')
+            ->where('mp.destinataire = :id')
+            ->setParameter('id', "$id")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function outbox($id)
+    {
+        return $this->createQueryBuilder('mp')
+            ->where('mp.expediteur = :id')
+            ->setParameter('id', "$id")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return MessagePrive[] Returns an array of MessagePrive objects
     //  */

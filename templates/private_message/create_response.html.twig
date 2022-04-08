@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+    <section class="search_page">
+{{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_private_message_response', { 'id': id } ), 'method': 'POST'}) }}
+{{ form_widget(form.message) }}
+{{ form_widget(form.submit, { 'label': "Répondre" }) }}
+                {{ form_end(form) }}
+                </section>
+                </main>
+{% endblock %}

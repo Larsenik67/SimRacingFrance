@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+<section class="search_page">
+        <a class="nav_link mr" href="{{ path('app_private_message_inbox')}}">Retour</a>
+        <a class="nav_link mr" href="{{ path('app_private_message_response', { 'id': mp.id } )}}">Répondre</a>
+            <div>
+            <h1>{{ mp.objet }}</h1>
+                <h2>{{ mp.expediteur }}</h2>
+                <h3>{{ mp.dateTime|date('d/m/y H:i') }}</h3>
+                <p>{{ mp.contenu }}</p>
+                <div>
+                <ul>
+                    {% for reponse in mp.reponsePrive %}
+                    <hr>
+                        <li class="mb-5">
+                        {{ reponse.user.nom }} 
+                        </br>
+                        <p>{{ reponse.message }}</p> </br>
+                        {{ reponse.dateTime|date('d/m/y H:i') }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+</section>
+</main>
+{% endblock %}

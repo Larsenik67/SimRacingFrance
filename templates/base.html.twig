@@ -30,7 +30,7 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
                     <a class="nav_link mr" href="{{ path('app_profile')}}">Profile</a>
-                    <a class="nav_link mr" href="">Messagerie</a>
+                    <a class="nav_link mr" href="{{ path('app_private_message')}}">Messagerie</a>
 
                     {% if is_granted('ROLE_ADMIN') %} 
 

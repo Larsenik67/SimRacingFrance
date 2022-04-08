@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '../css/search.css' }}">
+ {% endblock %}
+{% block title %}Team{% endblock %}
+
+{% block body %}
+<main class="wrapper">
+
+<section class="search_page">
+        <h1 class="mb-5">Boite d'envois</h1>
+        <a class="nav_link mr" href="{{ path('app_private_message')}}">Retour</a>
+
+    <div>
+        {{ render ( controller ( 'App\\Controller\\ForumController::searchBar' )) }}
+    </div>
+
+    <div>
+        <ul>
+            {% if mp is defined and mp is not null %}
+                {% for message in mp %}
+                    <li><a class="nav_link mr" href="{{ path('app_private_message_outbox_page', { 'id': message.id } )}}">{{ message.objet }}
+                    </a><br>
+                    {{ message.destinataire.nom }}</li>
+                {% endfor %}
+            {% elseif mp is not defined or mp is null %}
+            <h2> Vous n'avez pas de message privé </h2>
+            {% endif %}
+        </ul>
+    </div>
+</section>
+</main>
+{% endblock %}
