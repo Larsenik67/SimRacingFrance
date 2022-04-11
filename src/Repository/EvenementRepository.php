@@ -55,6 +55,16 @@ class EvenementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllToday(\DateTime $today)
+    {
+        return $this->createQueryBuilder('e')
+        ->where('e.dateTime <= :today')
+        ->setParameter('today', $today)
+        ->orderBy('e.dateTime', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Evenement[] Returns an array of Evenement objects
     //  */
