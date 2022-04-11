@@ -33,9 +33,11 @@ class HomeController extends AbstractController
             }
         }
 
+            $today = new \DateTime("now");
+
             $events = $doctrine
                     ->getRepository(Evenement::class)
-                    ->findAll();
+                    ->findAllToday($today);
 
             $sujets = $doctrine
                     ->getRepository(Sujet::class)
