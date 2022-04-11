@@ -1,33 +1,46 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/home.css' }}">
+ <link rel="stylesheet" href="{{ '/css/forum.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
-        <a class="nav_link mr" href="{{ path('app_private_message_inbox')}}">Retour</a>
-        <a class="nav_link mr" href="{{ path('app_private_message_response', { 'id': mp.id } )}}">Répondre</a>
+<section class="forum">
+        <a class="nav_link mr button" href="{{ path('app_private_message_inbox')}}">Retour</a>
+        <a class="nav_link mr button" href="{{ path('app_private_message_response', { 'id': mp.id } )}}">Répondre</a>
             <div>
-            <h1>{{ mp.objet }}</h1>
-                <h2>{{ mp.expediteur }}</h2>
-                <h3>{{ mp.dateTime|date('d/m/y H:i') }}</h3>
-                <p>{{ mp.contenu }}</p>
+<div class="vignette">
+                <div class="info">
+                    <h1 class="titre mt-5 mb-1">{{ mp.objet }}</h1>
+                    <p class="auteur my-1 mx-5">de <a class="nav_link black" href="{{ path('app_profile_id', { 'id': mp.expediteur.id } )}}">{{ mp.expediteur }}</a> le <span class="police_course red">{{ mp.dateTime|date('d/m/y H:i') }}</span><p>
+                </div>
+                <div class="contenu"> 
+                    <p class="my-5 mx-5">{{ mp.contenu }}</p>
+                </div>
                 <div>
                 <ul>
+
                     {% for reponse in mp.reponsePrive %}
                     <hr>
-                        <li class="mb-5">
-                        {{ reponse.user.nom }} 
-                        </br>
-                        <p>{{ reponse.message }}</p> </br>
+                    <li class="mb-5 vignette">
+
+                        
+                        <a class="nav_link black police_course" href="{{ path('app_profile_id', { 'id': reponse.user.id } )}}">{{ reponse.user.nom }}</a>
+                        
+                        
+                        <p class="contenu my-5">{{ reponse.message }}</p>
+                        
+                        <div class="date police_course red">
                         {{ reponse.dateTime|date('d/m/y H:i') }}
+                        </div>
                         </li>
                     {% endfor %}
                 </ul>
                 </div>
             </div>
+        <a class="nav_link mr button" href="{{ path('app_private_message_response', { 'id': mp.id } )}}">Répondre</a>
 </section>
 </main>
 {% endblock %}

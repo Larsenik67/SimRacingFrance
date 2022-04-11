@@ -1,18 +1,33 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/home.css' }}">
+ <link rel="stylesheet" href="{{ 'css/team.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
-<a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-<a class="nav_link mr" href="{{ path('app_team_sujet_create')}}">Créer un nouveau sujet</a>
-<h1>Liste des sujets chez {{ app.user.team.nom }}</h1>
-<ul>
+<section class="team">
+<a class="nav_link mr button my-3" href="{{ path('app_team')}}">Retour</a>
+<a class="nav_link mr button my-3" href="{{ path('app_team_sujet_create')}}">Créer un sujet</a>
+<h1 class="my-3">Liste des sujets chez {{ app.user.team.nom }}</h1>
+<ul class="grid">
 {% for sujet in app.user.team.sujets %}
-<li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
+<li>
+                    <a class="nav_link black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ sujet.titre }}
+                            </div>
+                            <div class="longue_bulle marge">
+                                de {{ sujet.user.nom }}
+                            </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ sujet.messages|length }}</span> réponse(s)
+                                </div>
+                        </div>
+                    </a>
+                </li>
 {% endfor %}
 </ul>
 </section>

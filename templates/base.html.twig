@@ -29,7 +29,7 @@
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-                    <a class="nav_link mr" href="{{ path('app_profile')}}">Profile</a>
+                    <a class="nav_link mr" href="{{ path('app_profile')}}">Profil</a>
                     <a class="nav_link mr" href="{{ path('app_private_message')}}">Messagerie</a>
 
                     {% if is_granted('ROLE_ADMIN') %} 
@@ -52,7 +52,7 @@
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
-            <div class ="search_bar input-group my-3">
+            <div class="search_bar input-group my-3">
             {{ render ( controller ( 'App\\Controller\\SearchController::searchBar' )) }}
                 
                     <!--<input type="text" id="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Recherchez un pilote, une team ou un évènement...">-->
@@ -60,11 +60,9 @@
         </header>
          <!-- Fin Header-->
         {% block body %}{% endblock %}
-        <footer class="footer">
+        <footer class="footer side-spaced">
 
-            <div class="footer-left">
-
-                <h3 class="police_logo my-5"><strong>SimRacing France</strong></h3>
+                <h3 class="police_logo white mt-5 mb-2"><strong>SimRacing France</strong></h3>
 
                 <p class="footer-links">
 
@@ -98,39 +96,13 @@
 
                 </p>
 
-                <p class="footer-company-name white">Mentions légales © 2022</p>
-            </div>
+                <p class="white">Mentions légales © 2022</p>
 
-            <div class="footer-center">
-
-                <div>
-                    <i class="fa fa-map-marker"></i>
-                    <p><strong><span>1 Rue du Hoelzel,</span> 67400 Illkirch-Graffenstaden</strong></p>
-                </div>
-
-                <div>
-                    <i class="fa fa-phone"></i>
-                    
-                </div>
-
-                <div>
-                    <i class="fa fa-envelope"></i>
-                </div>
-
-            </div>
-
-            <div class="footer-right">
-
-                <p class="footer-company-about">
-                    <span>À propos</span>
+                <p class="white">
+                
+                    À propos
 
                 </p>
-
-                <div class="footer-icons">
-                    <a href="https://www.facebook.com/la.perle.bleue.ilk/?ref=py_c"><i class="fab fa-facebook-f"></i></a>
-                </div>
-
-            </div>
 
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

@@ -3,7 +3,6 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1em;
     row-gap: 1em;
-    margin-bottom: 2em;
 }
 
 .news>a{
@@ -30,7 +29,9 @@
 }
 
 .source{
-    width: 30%;
+    width: fit-content;
+    padding-left: 1em;
+    padding-right: 1em;
     height: fit-content;
 }
 
@@ -46,4 +47,9 @@
 
 .jours>p{
     margin: 0;
+}
+
+.wrapper{
+    margin-top: 10em;
+    margin-bottom: 10em;
 }

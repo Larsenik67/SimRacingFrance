@@ -31,13 +31,13 @@ $.ajax(settings).done(function (response) {
 			if(titre.length > 90) titre = titre.substring(0,90) + "..."
 
 			$("#vignette_news").append(
-				"<a href='"
+				"<a class='nav_link mr black' href='"
 				+ url + 
 				"'><li><div class='vignette'><div class='picture_div marge'><img class='picture' src='"
 				+ img +
 				"' alt='News'><div id='div_text'><h4><span class='uppercase' id='titre'>"
 				 + titre + 
-				 "</span></h4></div></div><div class='source'><p>"
+				 "</span></h4></div></div><div class='source black police_course'><p>"
 				 + source + 
 				 "</p></div></div></li></a>"
 			)
@@ -60,7 +60,7 @@ $.ajax(settings).done(function (response) {
 				+ img +
 				"' alt='News'><div id='div_text'><h4><span class='uppercase' id='titre'>"
 				 + titre + 
-				 "</span></h4></div></div><div class='info_news'><div class='source'><p>"
+				 "</span></h4></div></div><div class='info_news'><div class='source black police_course'><p>"
 				 + source + 
 				 "</p></div><div class='jours'><p>Il y'a " 
 				 + jour + 

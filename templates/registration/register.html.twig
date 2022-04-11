@@ -1,34 +1,33 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
 
 {% block body %}
-
-<main>
-        <!-- Début Section Accueil : image et texte-->
-        <section class="section_bg_img flex jc-center ai-center">
-            <div class="ta-center white mb-5">
-                <h1 id="main_titre" class="shadow_contour">Register</h1>
-            </div>
-        </section>
-        <!-- Fin Section Accueil-->
+<main class="wrapper">
+<section class="form">
 
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <section class="section_login">
-
-    {{ form_start(registrationForm, {'attr' : { 'class': 'login_form flex column'} }) }}
-        <h1 class="h3 mb-3 font-weight-normal">Inscrivez-vous</h1>
-        {{ form_row(registrationForm.nom, {
-            label: 'Nom de pilote'
-        }) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword.first) }}
-        {{ form_row(registrationForm.plainPassword.second) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn btn-lg btn-primar">S'inscrire</button>
+    {{ form_start(registrationForm, {'attr' : { 'class': 'my-5 login_form flex column'} }) }}
+        <h1 class="mb-5">Inscrivez-vous</h1>
+        {{ form_label(registrationForm.nom, 'Nom de team' ) }}
+        {{ form_widget(registrationForm.nom, {'attr' : { 'class': 'mb-4'} }) }}
+        {{ form_label(registrationForm.nom, 'Email' ) }}
+        {{ form_widget(registrationForm.email, {'attr' : { 'class': 'mb-4'} }) }}
+        {{ form_label(registrationForm.nom, 'Mot de passe' ) }}
+        {{ form_widget(registrationForm.plainPassword.first, {'attr' : { 'class': 'mb-4'} }) }}
+        {{ form_label(registrationForm.nom, 'Répétez votre mot de passe' ) }}
+        {{ form_widget(registrationForm.plainPassword.second, {'attr' : { 'class': 'mb-4'} }) }}
+        <div class="checkbox">
+        {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisations" ) }}
+        {{ form_widget(registrationForm.agreeTerms, {'attr' : { 'class': 'mb-4'} }) }}
+        </div>
+        <button type="submit" class="mt-3 button-blue">S'inscrire</button>
     {{ form_end(registrationForm) }}
+</section>
+</main>
 {% endblock %}

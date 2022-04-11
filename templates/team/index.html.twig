@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/team.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
@@ -10,35 +10,33 @@
 {% if search is not defined %}
     {% if app.user.team is defined and app.user.team is not null %}
         {% if app.user.isVerifiedTeam == "1"  %}
-            <section class="search_page">
+            <section class="team">
             <div>
             <h1>{{ app.user.team.nom }}</h1>
                 <h2>{{ app.user.team.description }}</h2>
-                <ul>
                     {% for jeu in app.user.team.jeu %}
-                        <li class="mb-5">{{ jeu.nom }}</li>
+                        <p>{{ jeu.nom }}<img src="img/jeux/{{ jeu.icone }}" alt="logo {{ jeu.nom }}" height="50" width="50"/></p>
                     {% endfor %}
-                </ul>
                 {% if app.user.isVerifiedTeam == "1"  %}
-                {% if app.user.roleteam != ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
-                <a class="nav_link mr" href="{{ path('app_team_leave')}}">Quitter la team</a>
-                {% elseif app.user.roleteam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
-                <a class="nav_link mr" href="{{ path('app_team_delete')}}">Supprimer la team</a>
-                {% endif %}
                 {% if app.user.roleTeam[0] == "ROLE_ADMIN" %}
-                <a class="nav_link mr" href="{{ path('app_team_edit')}}">Modifier la team</a>
-                <a class="nav_link mr" href="{{ path('app_event_create')}}">Crée un évènement</a>
+                <a class="nav_link mr button" href="{{ path('app_team_edit')}}">Modifier la team</a>
+                <a class="nav_link mr button" href="{{ path('app_event_create')}}">Crée un évènement</a>
+                {% endif %}
+                {% if app.user.roleteam != ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
+                <a class="nav_link mr button-red" href="{{ path('app_team_leave')}}">Quitter la team</a>
+                {% elseif app.user.roleteam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
+                <a class="nav_link mr button-red" href="{{ path('app_team_delete')}}">Supprimer la team</a>
                 {% endif %}
                 {% endif %}
             </div>
 
             <div>
-                <a class="nav_link mr" href="{{ path('app_team_event')}}">Les evenement</a>
-                <a class="nav_link mr" href="{{ path('app_team_sujet')}}">Les discussions</a>
-                <a class="nav_link mr" href="{{ path('app_team_user')}}">Les pilotes</a>
+                <a class="nav_link mr button" href="{{ path('app_team_event')}}">Les evenement</a>
+                <a class="nav_link mr button" href="{{ path('app_team_sujet')}}">Les discussions</a>
+                <a class="nav_link mr button" href="{{ path('app_team_user')}}">Les pilotes</a>
 
                 {% if app.user.roleTeam[0] == "ROLE_ADMIN" or app.user.roleTeam[0] == "ROLE_MODO" %}
-                    <a class="nav_link mr" href="{{ path('app_team_confirmation')}}">Les pilotes en attentes ({{ count }})</a>
+                    <a class="nav_link mr button" href="{{ path('app_team_confirmation')}}">Les pilotes en attentes ({{ count }})</a>
                 {% endif %}
 
             </div>
@@ -48,31 +46,31 @@
             <div>
             <p>Candidature en attente pour la team :</p>
             <h1>{{ app.user.team.nom }}</h1>
-                <a class="nav_link mr" href="{{ path('app_team_leave')}}">Annuler la candidature</a>
+                <a class="nav_link mr button-red" href="{{ path('app_team_leave')}}">Annuler la candidature</a>
             </div>
             </section>
         {% endif %}
     {% endif %}
 {% endif %}
 
-<section class="search_page">
+<section class="team">
     {% if search is defined %}
         <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
         <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
     {% endif %}
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {% if app.user.team is not defined or app.user.team is null %}
-            <a class="nav_link mr" href="{{ path('app_team_create')}}">Crée une team</a>
-        {% endif %}
-    {% endif %}
-
-    <div>
+    <div class ="search_bar my-3">
         {{ render ( controller ( 'App\\Controller\\TeamController::searchBar' )) }}
     </div>
 
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if app.user.team is not defined or app.user.team is null %}
+            <a class="nav_link button" href="{{ path('app_team_create')}}">Crée une team</a>
+        {% endif %}
+    {% endif %}
+    <hr>
     <div>
-        <ul>
+        <ul class="grid">
             {% if teamresult is defined %}
                 {% for teamresult in teamsearch %}
                     <li>{{ teamresult.nom }}</li>
@@ -80,13 +78,7 @@
             {% endif %}
 
             {% for team in teams %}
-                <li><a class="nav_link mr" href="{{ path('app_team_id', { 'id': team.id } )}}">{{ team.nom }}</a></li>
-
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    {% if app.user.team is null or app.user.team is not defined %}
-                        <a class="nav_link mr" href="{{ path('app_team_join', { 'id': team.id } )}}">Rejoindre {{ team.nom }}</a>
-                    {% endif %}
-                {% endif %}
+                <li><a class="nav_link button" href="{{ path('app_team_id', { 'id': team.id } )}}">{{ team.nom }}</a></li>
             {% endfor %}
         </ul>
     </div>

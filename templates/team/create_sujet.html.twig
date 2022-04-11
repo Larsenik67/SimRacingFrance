@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/form.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
-{{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_team_sujet_create'), 'method': 'POST'}) }}
+    <section class="form">
+
+{{ form_start(form,{attr: {class: 'mb-5 flex column'}, 'action': path('app_forum_create'), 'method': 'POST'}) }}
+        <h1 class="mb-5">Nouveau sujet</h1>
 {{ form_label(form.titre, "Titre" ) }}
-{{ form_widget(form.titre) }}
+{{ form_widget(form.titre, {'attr' : { 'class': 'mb-4'} }) }}
 {{ form_label(form.description, "Description" ) }}
-{{ form_widget(form.description) }}
+{{ form_widget(form.description, {'attr' : { 'class': 'mb-4'} }) }}
+{{ form_label(form.description, "Message" ) }}
 {{ form_widget(form.contenu) }}
 {{ form_widget(form.submit, { 'label': "Créer le sujet" }) }}
                 {{ form_end(form) }}

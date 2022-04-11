@@ -20,13 +20,9 @@ class EditEventType extends AbstractType
             ->add('description')
             ->add('nbPlace')
             ->add('dateTime')
-            ->add('jeu', EntityType::class , array(
-                'class' => Jeu::class,
-                'expanded' => true,
-                'multiple' => false,
-            ))
+            ->add('jeu')
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-blue'],
             ]);
 
     }

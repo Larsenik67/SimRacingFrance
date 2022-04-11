@@ -1,53 +1,73 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
- <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ <link rel="stylesheet" href="{{ '/css/home.css' }}">
+ <link rel="stylesheet" href="{{ '/css/forum.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
-
+ 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
+<section class="forum">
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
         {% if sujet.closed == 0 %}
-        <a class="nav_link mr" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
+        <a class="nav_link mr button my-3" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
         {% endif %}
+
+        {% if app.user.roleTeam is not empty %}
         {% if sujet.user == app.user or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_ADMIN" or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_MODO"%}
-        <a class="nav_link mr" href="{{ path('app_forum_edit', { 'id': sujet.id } )}}">Editer</a>
-        <a class="nav_link mr" href="{{ path('app_forum_delete', { 'id': sujet.id } )}}">Supprimer</a>
+        <a class="nav_link mr button my-3" href="{{ path('app_forum_edit', { 'id': sujet.id } )}}">Editer</a>
+        <a class="nav_link mr button-red my-3" href="{{ path('app_forum_delete', { 'id': sujet.id } )}}">Supprimer</a>
         {% endif %}
         {% if sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_ADMIN" or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_MODO" %}
         {% if sujet.closed == 0 %}
-        <a class="nav_link mr" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Fermer le sujet</a>
+        <a class="nav_link mr button-red my-3" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Fermer le sujet</a>
         {% elseif sujet.closed == 1 %}
-        <a class="nav_link mr" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Réouvrir le sujet</a>
+        <a class="nav_link mr button my-3" href="{{ path('app_forum_close', { 'id': sujet.id } )}}">Réouvrir le sujet</a>
+        {% endif %}
         {% endif %}
         {% endif %}
     {% endif %}
-            <div>
-            <h1>{{ sujet.titre }}</h1>
-                <h2>{{ sujet.description }}</h2>
-                <h3>{{ sujet.user.nom }}</h3>
-                <h4>{{ sujet.dateTime|date('d/m/y H:i') }}</h4>
-                <p>{{ sujet.contenu }}</p>
+            <div class="vignette">
+                <div class="info">
+                    <h1 class="titre mt-5 mb-1">{{ sujet.titre }}</h1>
+                    <p class="description mb-3">{{ sujet.description }}<p>
+                    <p class="auteur my-1 mx-5">de <a class="nav_link black" href="{{ path('app_profile_id', { 'id': sujet.user.id } )}}">{{ sujet.user.nom }}</a> le <span class="police_course red">{{ sujet.dateTime|date('d/m/y H:i') }}</span><p>
+                </div>
+                <div class="contenu"> 
+                    <p class="my-5 mx-5">{{ sujet.contenu }}</p>
+                </div>
+                <hr>
                 <div>
                 <ul>
                     {% for reponse in sujet.messages %}
-                        <li class="mb-5">
-                        {{ reponse.user.nom }} 
-                        
+                        <li class="mb-5 vignette">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.roleTeam is not empty %}
                         {% if reponse.user == app.user or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_ADMIN" or sujet.team == app.user.team and app.user.roleTeam[0] == "ROLE_MODO" %}
-                        <a class="nav_link mr" href="{{ path('app_forum_message_edit', { 'id': reponse.id } )}}">Editer</a>
-                        <a class="nav_link mr" href="{{ path('app_forum_message_delete', { 'id': reponse.id } )}}">Supprimer</a>
+                        <a class="nav_link mr button-blue" href="{{ path('app_forum_message_edit', { 'id': reponse.id } )}}">Editer</a>
+                        <a class="nav_link button-red" href="{{ path('app_forum_message_delete', { 'id': reponse.id } )}}">Supprimer</a>
+                        {% endif %}
                         {% endif %}
 
-                        </br>
-                        <p>{{ reponse.contenu }}</p> </br>
+                        <hr>
+                        <a class="nav_link black police_course" href="{{ path('app_profile_id', { 'id': reponse.user.id } )}}">{{ reponse.user.nom }}</a>
+                        
+                        
+                        <p class="contenu my-5">{{ reponse.contenu }}</p>
+                        
+                        <div class="date police_course red">
                         {{ reponse.dateTime|date('d/m/y H:i') }}
+                        </div>
                         </li>
                     {% endfor %}
                 </ul>
                 </div>
             </div>
+            
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if sujet.closed == 0 %}
+        <a class="nav_link mr button my-3" href="{{ path('app_forum_response', { 'id': sujet.id } )}}">Répondre</a>
+        {% endif %}
+        {% endif %}
 </section>
 </main>
 {% endblock %}

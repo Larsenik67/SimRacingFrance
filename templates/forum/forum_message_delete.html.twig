@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
+    <section class="form">
     <h1>Voulez vous vraiment supprimer votre message ?</h1>
-        {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_message_delete', { 'id': message.id }), 'method': 'POST'}) }}
+        {{ form_start(form,{attr: {class: 'my-5 flex column'}, 'action': path('app_forum_message_delete', { 'id': message.id }), 'method': 'POST'}) }}
         {{ form_widget(form.submit, { 'label': 'Supprimer le message' }) }}
         {{ form_end(form) }}
     </section>

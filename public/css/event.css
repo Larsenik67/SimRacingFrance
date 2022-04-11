@@ -1,0 +1,36 @@
+.event{
+    width: 80%;
+    padding: 5em;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: #0065DB;
+    border: 1px solid black;
+    border-radius: 14px;
+    color: white;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em;
+    row-gap: 1em;
+    margin-bottom: 2em;
+}
+
+.titre{
+    font-size: 4em;
+}
+
+.center{
+    text-align: center;
+}
+
+.description{
+    font-size: 2em;
+    font-style: italic;
+}
+
+.info{
+    font-size: 2em;
+}

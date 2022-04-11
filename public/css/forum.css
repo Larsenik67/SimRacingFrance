@@ -1,0 +1,46 @@
+.forum{
+    width: 80%;
+    padding: 5em;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: #0065DB;
+    border: 1px solid black;
+    border-radius: 14px;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em;
+    row-gap: 1em;
+    margin-bottom: 2em;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.titre{
+    text-align: center;
+    font-size: 4em;
+}
+
+.description{
+    text-align: center;
+    font-size: 2em;
+    font-style: italic;
+}
+
+.auteur{
+    text-align: center;
+}
+
+.contenu{
+    text-align: center;
+}
+
+.date{
+    text-align: right;
+}

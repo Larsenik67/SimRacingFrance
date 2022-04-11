@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
-        {{ form_start(form,{attr: {class: ''}, 'action': path('app_private_message_create', { 'id': id }), 'method': 'POST'}) }}
+    <section class="form">
+        {{ form_start(form,{attr: {class: 'mb-5 flex column'}, 'action': path('app_private_message_create', { 'id': id }), 'method': 'POST'}) }}
                 {{ form_label(form.objet, 'Objet') }}
-                {{ form_widget(form.objet)}}
+                {{ form_widget(form.objet, {'attr' : { 'class': 'mb-4'} })}}
                 {{ form_label(form.contenu, 'Message') }}
-                {{ form_widget(form.contenu)}}
+                {{ form_widget(form.contenu, {'attr' : { 'class': 'mb-4'} })}}
         {{ form_widget(form.submit, { 'label': 'Envoyer' }) }}
         {{ form_end(form) }}
     </section>

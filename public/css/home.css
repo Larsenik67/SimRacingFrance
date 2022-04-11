@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    margin: 10em 0em 10em 0em;
     padding: 2em;
 }
 
@@ -21,7 +20,7 @@
 .section_colonne{
 flex: 1;
 background-color: #0065DB;
-height: 40em;
+height: 50em;
 margin: 1em;
 justify-content: center;
 text-align: center;
@@ -29,7 +28,6 @@ overflow:hidden;
 }
 
 .vignette{
-    margin-top: 2em;
     border-radius: 14px;
     background-color: #FFFFFF;
     padding: 1em;
@@ -73,7 +71,7 @@ overflow:hidden;
     width: 50%;
     left: 0;
     border-radius: 14px;
-    background-color: #7A7A7A;
+    background-color: #C4C4C4;
     text-align: center;
     border: 1px solid #000000;
 }
@@ -81,7 +79,7 @@ overflow:hidden;
 .longue_bulle{
     width: 100%;
     border-radius: 14px;
-    background-color: #7A7A7A;
+    background-color: #C4C4C4;
     text-align: center;
     border: 1px solid #000000;
 }
@@ -132,16 +130,4 @@ overflow:hidden;
 
 .detail_event{
     padding: 0.5em 0;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #11171a;
-  border-radius: 10px;
 }

@@ -19,7 +19,7 @@ class CreateEventType extends AbstractType
             ->add('dateTime')
             ->add('jeu')
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-5 button-blue'],
             ]);
         ;
     }

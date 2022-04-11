@@ -1,8 +1,10 @@
 .search_page{
-    width: 100%;
+    width: 80%;
     padding: 5em;
+    margin: auto;
     margin-top: 2em;
     margin-bottom: 2em;
     background-color: white;
     border: 1px solid black;
+    border-radius: 14px;
 }

@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
- <link rel="stylesheet" href="{{ 'css/search.css' }}">
+ <link rel="stylesheet" href="{{ '/css/home.css' }}">
+ <link rel="stylesheet" href="{{ '/css/profil.css' }}">
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
+ 
 {% block body %}
 <main class="wrapper">
     <section class="search_page">
@@ -12,12 +15,12 @@
         {% else %}
         {% if users is not null and users is not empty %}
         <div>
-        <h2>Pilotes:</h2>
         <hr>
+        <h2 class="mt-5 mb-2">Pilote(s)</h2>
         <ul>
         {% for user in users %}
 
-        <li><a class="nav_link mr" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a></li>
+        <li><a class="nav_link black" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a></li>
 
         {% endfor %}
         </ul>
@@ -27,12 +30,12 @@
         {% endif %}
         {% if teams is not null and teams is not empty %}
         <div>
-        <h2>Team:</h2>
         <hr>
+        <h2 class="mt-5 mb-2">Team(s)</h2>
         <ul>
         {% for team in teams %}
         
-        <li><a class="nav_link mr" href="{{ path('app_team_id', { 'id': team.id }) }}">{{ team.nom }}</a></li>
+        <li><a class="nav_link button-blue" href="{{ path('app_team_id', { 'id': team.id } )}}">{{ team.nom }}</a></li>
 
         {% endfor %}
         </ul>
@@ -41,12 +44,28 @@
         {% endif %}
         {% if events is not null and events is not empty %}
         <div>
-        <h2>Evenement:</h2>
         <hr>
-        <ul>
+        <h2 class="mt-5 mb-2">Évènement(s)</h2>
+        <ul class="grid">
         {% for event in events %}
         
-        <li>{{ event.nom }}</li>
+       <li>
+                    <a class="nav_link mr black" href="{{ path('app_event_id', { 'id': event.id } )}}">
+                        <div class="vignette event_container">
+                            <div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('d/m') }}</div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('H:i') }}</div>
+                            </div>
+                            <div>
+                                <div class="longue_bulle marge">{{ event.nom }}</div>
+                                <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                                <div class="longue_bulle detail_event">
+                                    <div><span class="red police_course">{{ event.users|length }}/{{ event.nbPlace }}</span> participant(s)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
 
         {% endfor %}
         </ul>
@@ -55,12 +74,26 @@
         {% endif %}
         {% if sujets is not null and sujets is not empty %}
         <div>
-        <h2>Discution:</h2>
         <hr>
-        <ul>
+        <h2 class="mt-5 mb-2">Discussion(s)</h2>
+        <ul class="grid">
         {% for sujet in sujets %}
         
-        <li>{{ sujet.titre }}</li>
+        <li>
+                    <a class="nav_link black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ sujet.titre }}
+                            </div>
+                            <div class="longue_bulle marge">
+                                de {{ sujet.user.nom }}
+                            </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ sujet.messages|length }}</span> réponse(s)
+                                </div>
+                        </div>
+                    </a>
+                </li>
 
         {% endfor %}
         </ul>

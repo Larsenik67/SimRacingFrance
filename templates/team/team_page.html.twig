@@ -1,42 +1,60 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/home.css' }}">
+ <link rel="stylesheet" href="{{ '/css/team.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
+<section class="team">
             <div>
             <h1>{{ team.nom }}</h1>
                 <h2>{{ team.description }}</h2>
+                {% for jeu in team.jeu %}
+                <p>{{ jeu.nom }}<img src="/img/jeux/{{ jeu.icone }}" alt="logo {{ jeu.nom }}" height="50" width="50"/></p>
+                {% endfor %}
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     {% if app.user.team == team %}
                         {% if app.user.isVerifiedTeam == "0" %}
-                            <a class="nav_link mr" href="{{ path('app_team_leave')}}">Annuler la candidature</a>
+                            <a class="nav_link mr button" href="{{ path('app_team_leave')}}">Annuler la candidature</a>
                         {% elseif  app.user.isVerifiedTeam == "1" %}
                             {% if app.user.roleteam != ["ROLE_ADMIN", "ROLE_FONDATEUR"]%}
-                            <a class="nav_link mr" href="{{ path('app_team_leave')}}">Quitter la team</a>
+                            <a class="nav_link mr button" href="{{ path('app_team_leave')}}">Quitter la team</a>
                             {% endif %}
                         {% endif %}
                     {% endif %}
                     {% if app.user.team == null %}
-                        <a class="nav_link mr" href="{{ path('app_team_join', { 'id': team.id } )}}">Rejoindre la team</a>
+                        <a class="nav_link mr button" href="{{ path('app_team_join', { 'id': team.id } )}}">Rejoindre la team</a>
                     {% endif %}
                 {% endif %}
-                <div>
+                <div class="pilote my-5">
                 <h3>Liste des pilotes ({{ count }} membre(s))</h3>
-                <ul>
                     {% for user in users %}
-                        <li class="mb-5">{{ user.nom }}</li>
+                        <p class="my-2"><a class="nav_link white" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a></p>
                     {% endfor %}
-                </ul>
                 </div>
                 <div>
                  <h3>Liste des events</h3>
-                <ul>
+                <ul class="grid">
                     {% for event in team.evenements %}
-                        <li class="mb-5">{{ event.nom }}</li>
+                         <li>
+                    <a class="nav_link mr black" href="{{ path('app_event_id', { 'id': event.id } )}}">
+                        <div class="vignette event_container">
+                            <div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('d/m') }}</div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('H:i') }}</div>
+                            </div>
+                            <div>
+                                <div class="longue_bulle marge">{{ event.nom }}</div>
+                                <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                                <div class="longue_bulle detail_event">
+                                    <div><span class="red police_course">{{ event.users|length }}/{{ event.nbPlace }}</span> participant(s)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
                     {% endfor %}
                 </ul>
                 </div>

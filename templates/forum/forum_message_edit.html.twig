@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
-        {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_message_edit', { 'id': message.id }), 'method': 'POST'}) }}
+    <section class="form">
+        {{ form_start(form,{attr: {class: 'mb-5 flex column'}, 'action': path('app_forum_message_edit', { 'id': message.id }), 'method': 'POST'}) }}
                 {{ form_widget(form.contenu, {'attr': {'placeholder': message.contenu }})}}
         {{ form_widget(form.submit, { 'label': 'Soumettre les modifications' }) }}
         {{ form_end(form) }}

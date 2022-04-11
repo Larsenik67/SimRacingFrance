@@ -1,25 +1,26 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/event.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
+<section class="event center">
             <div>
-            <h1>{{ event.nom }}</h1>
-                <h2>le {{ event.dateTime|date('d/m') }} à {{ event.dateTime|date('H:i') }}</h2>
-                <h2>{{ event.description }}</h2>
-                <h3>{{ event.team.nom }}
-                    <br>
-                {{ event.jeu.nom }}</h3>
-                <p>places: <br> {{ event.users|length }}/{{ event.nbPlace }}</p>
+            <h1 class="titre">{{ event.nom }}</h1>
+                <p class="description">le <span class="police_course red">{{ event.dateTime|date('d/m') }}</span> à <span class="police_course red">{{ event.dateTime|date('H:i') }}</span></p>
+                <p class="description">"{{ event.description }}"</p>
+                <p class="info">organisé par la team <a class="nav_link mr white" href="{{ path('app_team_id', { 'id': event.team.id })}}">{{ event.team.nom }}</a></p>
+                <p class="info">sur {{ event.jeu.nom }}<img src="/img/jeux/{{ event.jeu.icone }}" alt="logo {{ event.jeu.nom }}" height="50" width="50"/></p>
+                <p class="info">places: </p>
+                <p class="info police_course red">{{ event.users|length }}/{{ event.nbPlace }}</p>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-
+                    {% if app.user.team is not null %}
                     {% if app.user.team == event.team and app.user.roleTeam[0] == "ROLE_ADMIN" %}
-                    <a class="nav_link mr" href="{{ path('app_event_edit', { 'id': event.id })}}">Modifier l'évènement</a>
-                    <a class="nav_link mr" href="{{ path('app_event_delete', { 'id': event.id })}}">Supprimer l'évènement</a>
+                    <a class="nav_link mr button" href="{{ path('app_event_edit', { 'id': event.id })}}">Modifier l'évènement</a>
+                    <a class="nav_link mr button-red" href="{{ path('app_event_delete', { 'id': event.id })}}">Supprimer l'évènement</a>
+                    {% endif %}
                     {% endif %}
 
                     {% set UserIn = 0 %}
@@ -30,19 +31,24 @@
                     {% endfor %}
                     {% if event.users|length != event.nbPlace %}
                     {% if UserIn != 1 %}
-                        <a class="nav_link mr" href="{{ path('app_event_join', { 'id': event.id } )}}">S'inscrire a l'évènement</a>
+                        <a class="nav_link mr button" href="{{ path('app_event_join', { 'id': event.id } )}}">S'inscrire a l'évènement</a>
                     {% endif %}
                     {% endif %}
 
                 {% endif %}
+                <hr>
                 <div>
-                <h3>Liste des participants ({{ event.users|length }}) :</h3>
+                <h3 class="my-5">Liste des participants ({{ event.users|length }}) :</h3>
                 <ul>
                     {% for user in event.users %}
                         <li class="mb-5">
-                        {{ user.nom }}
+                        <a class="nav_link mr white" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        {% if app.user.team is not null %}
                         {% if app.user.team == event.team and app.user.roleTeam[0] == "ROLE_ADMIN" %}
-                            <a class="nav_link mr" href="{{ path('app_event_leave', { 'idUser': user.id, 'id': event.id})}}">Supprimer</a>
+                            <a class="nav_link mr button-red" href="{{ path('app_event_leave', { 'idUser': user.id, 'id': event.id})}}">Supprimer</a>
+                        {% endif %}
+                        {% endif %}
                         {% endif %}</li>
                     {% endfor %}
                 </ul>

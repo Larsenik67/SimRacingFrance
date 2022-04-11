@@ -3,61 +3,63 @@
  {% block stylesheets %}
  <link rel="stylesheet" href="{{ 'css/home.css' }}">
  {% endblock %}
+ 
 {% block body %}
+<section class="section_bg_img flex jc-center ai-center">
+                    <div class="ta-center white">
+                        <h1 class="shadow_contour">Bienvenue sur <Strong class="police_course" >SimRacing France</Strong></h1>
+                    </div>
+</section>
 <main class="wrapper">
     <section class="accueil">
         <div class="section_colonne">
-            <h3>Prochain Evenement</h3>
+            <h3 class="white my-5">Prochains évènements</h3>
             <ul>
             {% for event in events %}
                 <li>
-                    <div class="vignette event_container">
-                        <div>
-                            <div class="longue_bulle detail_event marge" >{{ event.dateTime|date('d/m') }}</div>
-                            <div class="longue_bulle detail_event marge" >{{ event.dateTime|date('H:i') }}</div>
-                            <div class="longue_bulle detail_event">
-                                <div>places</div>
-                                <div>{{ event.users|length }}/{{ event.nbPlace }}</div>
+                    <a class="nav_link mr black" href="{{ path('app_event_id', { 'id': event.id } )}}">
+                        <div class="vignette event_container">
+                            <div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('d/m') }}</div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('H:i') }}</div>
+                            </div>
+                            <div>
+                                <div class="longue_bulle marge">{{ event.nom }}</div>
+                                <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                                <div class="longue_bulle detail_event">
+                                    <div><span class="red police_course">{{ event.users|length }}/{{ event.nbPlace }}</span> participant(s)</div>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="longue_bulle marge">{{ event.nom }}</div>
-                            <div class="longue_bulle marge">{{ event.team.nom }}</div>
-                            <div class="longue_bulle description_event">{{ event.description }}</div>
-                        </div>
-                    </div>
+                    </a>
                 </li>
             {% endfor %}
             </ul>
         </div>
         <div class="section_colonne">
-            <h3>Dernière discussions</h3>
+            <h3 class="white my-5">Dernières discussions</h3>
             <ul>
             {% for sujet in sujets %}
                 <li>
-                    <div class="vignette">
-                        <div class="longue_bulle marge">
-                            {{ sujet.titre }}
-                        </div>
-                        <div class="longue_bulle marge">
-                            {{ sujet.user.nom }}
-                        </div>
-                        <div class="detail_sujet">
-                            <div class="longue_bulle">
-                                <div>{{ sujet.messages|length }}</div>
-                                <div>réponse(s)</div>
+                    <a class="nav_link mr black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ sujet.titre }}
                             </div>
-                            <div class="longue_bulle">
-                                {{ sujet.contenu }}
+                            <div class="longue_bulle marge">
+                                de {{ sujet.user.nom }}
                             </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ sujet.messages|length }}</span> réponse(s)
+                                </div>
                         </div>
-                    </div>
+                    </a>
                 </li>
             {% endfor %}
             </ul>
         </div>
         <div class="section_colonne">
-            <h3>News sportif</h3>
+            <h3 class="white my-5">News sportif</h3>
             <ul id="vignette_news">
         
             </ul>

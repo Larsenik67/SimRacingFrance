@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
- <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
+ <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
+    <section class="form">
     {% if sujet.closed == 0 %}
     <h1>Voulez vous vraiment fermer le sujet "{{ sujet.titre }}" ?</h1>
         {{ form_start(form,{attr: {class: ''}, 'action': path('app_forum_close', { 'id': sujet.id }), 'method': 'POST'}) }}

@@ -15,7 +15,7 @@ class EditMessageType extends AbstractType
         $builder
             ->add('contenu')
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-blue'],
             ]);
         ;
     }

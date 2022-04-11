@@ -1,28 +1,30 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/home.css' }}">
+ <link rel="stylesheet" href="{{ 'css/forum.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
 
-<section class="search_page">
+<section class="forum">
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <a class="nav_link mr" href="{{ path('app_forum_create')}}">Crée un sujet</a>
-    {% endif %}
-    {% if search is defined %}
-        <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
-        <a class="nav_link mr" href="{{ path('app_forum')}}">Retour</a>
-    {% endif %}
-
-    <div>
+    <div class ="search_bar my-3">
         {{ render ( controller ( 'App\\Controller\\ForumController::searchBar' )) }}
     </div>
 
+    {% if search is defined %}
+        <h1 class="mb-5 white">Voici les résultats pour "{{ search }}"</h1>
+        <a class="nav_link mr button my-3" href="{{ path('app_forum')}}">Retour</a>
+    {% endif %}
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="nav_link mr button my-3" href="{{ path('app_forum_create')}}">Crée un sujet</a>
+    {% endif %}
+
     <div>
-        <ul>
+        <ul class="grid">
             {% if sujetresult is defined %}
                 {% for sujetresult in sujetsearch %}
                     <li>{{ sujetresult.titre }}</li>
@@ -31,7 +33,21 @@
 
             {% for sujet in sujets %}
             {% if sujet.team is null %}
-                <li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
+                <li>
+                    <a class="nav_link black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ sujet.titre }}
+                            </div>
+                            <div class="longue_bulle marge">
+                                de {{ sujet.user.nom }}
+                            </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ sujet.messages|length }}</span> réponse(s)
+                                </div>
+                        </div>
+                    </a>
+                </li>
             {% endif %}
             {% endfor %}
         </ul>

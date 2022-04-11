@@ -1,3 +1,3 @@
 {{ form_start(form,{attr: {class: 'form-control'}, 'action': path('app_team_search'), 'method': 'POST'}) }}
-                {{ form_widget(form.search)}}
+                {{ form_widget(form.search, {'attr': {'placeholder': 'Rechercher une team'}})}}
                 {{ form_end(form) }}

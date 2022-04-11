@@ -13,7 +13,7 @@ class DeleteTeamType extends AbstractType
     {
         $builder
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-red'],
             ]);
         ;
     }

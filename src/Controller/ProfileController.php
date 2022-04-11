@@ -143,7 +143,7 @@ class ProfileController extends AbstractController
 
             } else {
 
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_profile');
 
             }
             

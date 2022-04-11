@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/team.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-<section class="search_page">
-<a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-<h1>Liste des pilotes en attente chez {{ app.user.team.nom }}</h1>
-<ul>
+<section class="team">
+<a class="nav_link mr button" href="{{ path('app_team')}}">Retour</a>
+<h1 class="my-3">Liste des pilotes en attente chez {{ app.user.team.nom }}</h1>
+<ul class="pilote">
 {% for user in users %}
-<li class="mb-5">{{ user.nom }} - <a class="nav_link mr" href="{{ path('app_team_confirmation_id', { 'id': user.id } )}}">Accepter</a></li>
+<hr>
+<li class="my-2"><a class="nav_link mr white" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a><a class="nav_link mr button" href="{{ path('app_team_confirmation_id', { 'id': user.id } )}}">Accepter</a></li>
 {% endfor %}
 </ul>
 </section>

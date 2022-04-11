@@ -17,7 +17,7 @@ class EditSujetType extends AbstractType
             ->add('description')
             ->add('contenu')
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-blue'],
             ]);
         ;
     }

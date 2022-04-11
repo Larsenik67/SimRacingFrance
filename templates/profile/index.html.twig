@@ -1,40 +1,84 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/home.css' }}">
+ <link rel="stylesheet" href="{{ '/css/profil.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
+    <section class="profil center">
         <div>
-            <h1>{{ app.user.nom }}</h1>
+            <h1>
+            {{ app.user.nom }}
+            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                <span class="role black">- Administrateur du Site</span>
+            {% endif %}
+            </h1>
             <h2>{{ app.user.email }}</h2>
             {% if app.user.team != null %}
-            <h3>{{ app.user.team.nom }}</h3>
-            <p>{{ app.user.roleTeam[0] }}</p>
+            <p><a class="nav_link white" href="{{ path('app_team_id', { 'id': app.user.team.id }) }}">{{ app.user.team.nom }}</a>
+            {% if app.user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
+                <span class="mr role black">- Fondateur</span>
+            {% elseif app.user.roleTeam == ["ROLE_ADMIN"] %}
+                <span class="mr role black">- Admin</span>
+            {% elseif app.user.roleTeam == ["ROLE_MODO"] %}
+                <span class="mr role black">- Modérateur</span>
+            {% else %}
+                <span class="mr role black">- Membre</span>
+            {% endif %}</p>
             {% endif %}
             <div>
-                <a class="nav_link mr" href="{{ path('app_profile_edit') }}">Changer ses informations</a>
-                <a class="nav_link mr" href="{{ path('app_forgot_password_request') }}">Changer son mot de passe</a>
-                <a class="nav_link mr" href="{{ path('app_profile_disable') }}">Désactiver son compte</a>
+                <a class="nav_link mr button" href="{{ path('app_profile_edit') }}">Changer ses informations</a>
+                <a class="nav_link mr button" href="{{ path('app_forgot_password_request') }}">Changer son mot de passe</a>
+                <a class="nav_link mr button-red" href="{{ path('app_profile_disable') }}">Désactiver son compte</a>
             </div>
             {% if app.user.sujets is defined %}
             <div>
-                <h3>Liste des sujets</h3>
-                <ul>
+                <h3 class="mt-5 mb-2">Liste des sujets</h3>
+                <ul class="grid">
                 {% for sujet in app.user.sujets %}
-                <li><a class="nav_link mr" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">{{ sujet.titre }}</a></li>
+                <li>
+                    <a class="nav_link black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ sujet.titre }}
+                            </div>
+                            <div class="longue_bulle marge">
+                                de {{ sujet.user.nom }}
+                            </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ sujet.messages|length }}</span> réponse(s)
+                                </div>
+                        </div>
+                    </a>
+                </li>
                 {% endfor %}
                 </ul>
             </div>
             {% endif %}
             {% if app.user.evenement is defined %}
             <div>
-                <h3>Liste des events</h3>
-                <ul>
+                <h3 class="mt-5 mb-2">Liste des events</h3>
+                <ul class="grid">
                 {% for event in app.user.evenement %}
-                <li><a class="nav_link mr" href="{{ path('app_event_id', { 'id': event.id } )}}">{{ event.nom }}</a></li>
+                <li>
+                    <a class="nav_link mr black" href="{{ path('app_event_id', { 'id': event.id } )}}">
+                        <div class="vignette event_container">
+                            <div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('d/m') }}</div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('H:i') }}</div>
+                            </div>
+                            <div>
+                                <div class="longue_bulle marge">{{ event.nom }}</div>
+                                <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                                <div class="longue_bulle detail_event">
+                                    <div><span class="red police_course">{{ event.users|length }}/{{ event.nbPlace }}</span> participant(s)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
                 {% endfor %}
                 </ul>
             </div>

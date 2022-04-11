@@ -1,27 +1,36 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '../css/home.css' }}">
+ <link rel="stylesheet" href="{{ '../css/mp.css' }}">
  <link rel="stylesheet" href="{{ '../css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
 
-<section class="search_page">
-        <h1 class="mb-5">Boite de reception</h1>
-        <a class="nav_link mr" href="{{ path('app_private_message')}}">Retour</a>
-
-    <div>
-        {{ render ( controller ( 'App\\Controller\\ForumController::searchBar' )) }}
-    </div>
-
+<section class="mp">
+        <h1 class="mb-5 center">Boite de reception</h1>
+    <a class="nav_link mr button" href="{{ path('app_private_message')}}">Retour</a>
     <div>
         <ul>
             {% if mp is defined and mp is not null %}
                 {% for message in mp %}
-                    <li><a class="nav_link mr" href="{{ path('app_private_message_inbox_page', { 'id': message.id } )}}">{{ message.objet }}
-                    </a><br>
-                    {{ message.expediteur.nom }}</li>
+                <hr>
+                <li class="mb-1">
+                    <a class="nav_link black" href="{{ path('app_private_message_inbox_page', { 'id': message.id } )}}">
+                        <div class="vignette">
+                            <div class="longue_bulle marge">
+                                {{ message.objet }}
+                            </div>
+                            <div class="longue_bulle marge">
+                                de {{ message.expediteur.nom }}
+                            </div>
+                                <div class="longue_bulle">
+                                    <span class="red police_course">{{ message.dateTime|date('d/m/y H:i') }}</span>
+                                </div>
+                        </div>
+                    </a>
+                </li>
                 {% endfor %}
             {% elseif mp is not defined or mp is null %}
             <h2> Vous n'avez pas de message privé </h2>

@@ -17,7 +17,7 @@ class SearchBarType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => '',
-                    'placeholder' => 'Recherchez un pilote, une team ou un évènement...'
+                    'placeholder' => 'Rechercher un pilote, une team, un évènement ou un sujet...'
                 ]
             ])
         ;

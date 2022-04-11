@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/team.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
     <main class="wrapper">
-        <section class="search_page">
-            <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-            <h1>Liste des pilotes chez {{ app.user.team.nom }}</h1>
-            <ul>
+        <section class="team">
+            <a class="nav_link mr button" href="{{ path('app_team')}}">Retour</a>
+            <h1 class="my-3">Liste des pilotes chez {{ app.user.team.nom }}</h1>
+            <ul class="pilote">
                 {% for user in users %}
-                    <li class="mb-5">
-                        {{ user.nom }}
+                <hr>
+                    <li class="my-2">
+                        <a class="nav_link white" href="{{ path('app_profile_id', { 'id': user.id }) }}">{{ user.nom }}</a>
                         {% if user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
-                            - Fondateur
+                            <span class="mr role black">- Fondateur</span>
                         {% elseif user.roleTeam == ["ROLE_ADMIN"] %}
-                            - Admin
+                            <span class="mr role black">- Admin</span>
                         {% elseif user.roleTeam == ["ROLE_MODO"] %}
-                            - Modérateur
+                            <span class="mr role black">- Modérateur</span>
                         {% else %}
-                            - Membre
+                            <span class="mr role black">- Membre</span>
                         {% endif %}
 
                         {% if app.user.roleTeam[0] == "ROLE_ADMIN" or app.user.roleTeam[0] == "ROLE_MODO" %}
@@ -30,11 +31,11 @@
                                 {% if user.roleTeam[0] != "ROLE_ADMIN" %}
 
                                     {% if app.user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
-                                        <a class="nav_link mr" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
+                                        <a class="nav_link mr button" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
                                     {% elseif app.user.roleTeam[0] == "ROLE_ADMIN" and user.roleTeam[0] == "ROLE_MEMBRE" %}
-                                        <a class="nav_link mr" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
+                                        <a class="nav_link mr button" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
                                     {% elseif app.user.roleTeam[0] == "ROLE_MODO" and user.roleTeam[0] == "ROLE_MEMBRE" %}
-                                        <a class="nav_link mr" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
+                                        <a class="nav_link mr button" href="{{ path('app_promote_user', { 'id': user.id } )}}">Promouvoir le pilote</a>
                                     {% endif %}
 
                                 {% endif %}
@@ -42,19 +43,19 @@
                                 {% if user.roleTeam[0] != "ROLE_MEMBRE" %}
                                 
                                     {% if app.user.roleTeam == ["ROLE_ADMIN"] and user.roleTeam[0] != "ROLE_ADMIN" %}
-                                        <a class="nav_link mr" href="{{ path('app_demote_user', { 'id': user.id } )}}">Rétrograder le pilote</a>
+                                        <a class="nav_link mr button" href="{{ path('app_demote_user', { 'id': user.id } )}}">Rétrograder le pilote</a>
                                     {% elseif app.user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"]%}
-                                        <a class="nav_link mr" href="{{ path('app_demote_user', { 'id': user.id } )}}">Rétrograder le pilote</a>
+                                        <a class="nav_link mr button" href="{{ path('app_demote_user', { 'id': user.id } )}}">Rétrograder le pilote</a>
                                     {% endif %}
 
                                 {% endif %}
 
                                 {% if user.roleTeam[0] != "ROLE_ADMIN" or app.user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] %}
-                                    <a class="nav_link mr" href="{{ path('app_team_leave_id', { 'id': user.id } )}}">Supprimer le pilote</a>
+                                    <a class="nav_link mr button" href="{{ path('app_team_leave_id', { 'id': user.id } )}}">Supprimer le pilote</a>
                                 {% endif %}
 
                                 {% if app.user.roleTeam == ["ROLE_ADMIN", "ROLE_FONDATEUR"] and user.roleTeam == ["ROLE_ADMIN"] %}
-                                    <a class="nav_link mr" href="{{ path('app_transfer_propriety', { 'id': user.id } )}}">Transferer la propriété de la team</a>
+                                    <a class="nav_link mr button" href="{{ path('app_transfer_propriety', { 'id': user.id } )}}">Transferer la propriété de la team</a>
                                 {% endif %}
 
                             {% endif %}

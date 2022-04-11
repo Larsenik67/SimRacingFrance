@@ -1,28 +1,32 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ 'css/home.css' }}">
+ <link rel="stylesheet" href="{{ 'css/event.css' }}">
  <link rel="stylesheet" href="{{ 'css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
 
-<section class="search_page">
-    {% if search is defined %}
-        <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
-        <a class="nav_link mr" href="{{ path('app_team')}}">Retour</a>
-    {% endif %}
+<section class="event">
 
-    {% if app.user.roleTeam[0] == "ROLE_ADMIN" %}
-        <a class="nav_link mr" href="{{ path('app_event_create')}}">Crée un évènement</a>
-    {% endif %}
-
-    <div>
+    <div class ="search_bar my-3">
         {{ render ( controller ( 'App\\Controller\\EventController::searchBar' )) }}
     </div>
 
+    {% if search is defined %}
+        <h1 class="mb-5">Voici les résultats pour "{{ search }}"</h1>
+        <a class="nav_link mr button black my-3" href="{{ path('app_team')}}">Retour</a>
+    {% endif %}
+    
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.roleTeam is not empty %}
+        {% if app.user.roleTeam[0] == "ROLE_ADMIN" %}
+            <a class="nav_link mr button black my-3" href="{{ path('app_event_create')}}">Crée un évènement</a>
+        {% endif %}
+    {% endif %}
+
     <div>
-        <ul>
+        <ul class="grid">
             {% if eventresult is defined %}
                 {% for eventresult in eventsearch %}
                     <li>{{ teamresult.nom }}</li>
@@ -30,7 +34,23 @@
             {% endif %}
 
             {% for event in events %}
-                <li><a class="nav_link mr" href="{{ path('app_event_id', { 'id': event.id } )}}">{{ event.nom }}</a></li>
+            <li>
+                    <a class="nav_link mr black" href="{{ path('app_event_id', { 'id': event.id } )}}">
+                        <div class="vignette event_container">
+                            <div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('d/m') }}</div>
+                                <div class="longue_bulle detail_event marge red police_course" >{{ event.dateTime|date('H:i') }}</div>
+                            </div>
+                            <div>
+                                <div class="longue_bulle marge">{{ event.nom }}</div>
+                                <div class="longue_bulle marge">{{ event.team.nom }}</div>
+                                <div class="longue_bulle detail_event">
+                                    <div><span class="red police_course">{{ event.users|length }}/{{ event.nbPlace }}</span> participant(s)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </div>

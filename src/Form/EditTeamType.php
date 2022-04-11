@@ -23,7 +23,7 @@ class EditTeamType extends AbstractType
                 'multiple' => true,
             ))
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-blue'],
             ]);
     }
 

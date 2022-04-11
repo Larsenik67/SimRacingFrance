@@ -16,7 +16,7 @@ class CreatePrivateMessageType extends AbstractType
             ->add('objet')
             ->add('contenu')
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'attr' => ['class' => 'mt-3 button-blue'],
             ]);
         ;
     }

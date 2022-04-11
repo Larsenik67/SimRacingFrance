@@ -1,19 +1,23 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
-
+ 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
-        {{ form_start(form,{attr: {class: ''}, 'action': path('app_profile_edit'), 'method': 'POST'}) }}
+    <section class="form">
+        {{ form_start(form,{attr: {class: 'mb-5 flex column'}, 'action': path('app_profile_edit'), 'method': 'POST'}) }}
                 {{ form_label(form.nom, 'Nom de pilote') }}
-                {{ form_widget(form.nom, {'attr': {'placeholder': app.user.nom }})}}
+                {{ form_widget(form.nom, {'attr': {'placeholder': app.user.nom, 'class': 'mb-4' }})}}
                 {{ form_label(form.email, 'Email') }}
-                {{ form_widget(form.email, {'attr': {'placeholder': app.user.email }})}}
-                {{ form_label(form.jeu, 'Jeu(x)') }}
-                {{ form_widget(form.jeu)}}
+                {{ form_widget(form.email, {'attr': {'placeholder': app.user.email, 'class': 'mb-4' }})}}
+                {% for checkbox in form.jeu %}
+                <div>
+                {{ form_label(checkbox) }}
+                {{ form_widget(checkbox, {'attr' : {'class': 'mb-4'}})}}
+                </div>
+                {% endfor %}
         {{ form_widget(form.submit, { 'label': 'Modifier mes informations' }) }}
         {{ form_end(form) }}
     </section>

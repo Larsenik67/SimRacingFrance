@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/mp.css' }}">
  <link rel="stylesheet" href="{{ '/css/search.css' }}">
  {% endblock %}
-{% block title %}Team{% endblock %}
 
 {% block body %}
 <main class="wrapper">
-    <section class="search_page">
+    <section class="mp center">
         <div>
-            <h1>Message Privé</h1>
+            <h1 class="my-5">Message Privé</h1>
             <div>
-                <a class="nav_link mr" href="{{ path('app_private_message_inbox') }}">Boite de reception</a>
-                <a class="nav_link mr" href="{{ path('app_private_message_outbox') }}">Boite d'envois</a>
+                <a class="nav_link mx-5 button black" href="{{ path('app_private_message_inbox') }}">Boite de reception</a>
+                <a class="nav_link mx-5 button black" href="{{ path('app_private_message_outbox') }}">Boite d'envois</a>
             </div>
         </div>
     </section>
