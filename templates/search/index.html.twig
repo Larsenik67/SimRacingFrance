@@ -78,7 +78,7 @@
         <h2 class="mt-5 mb-2">Discussion(s)</h2>
         <ul class="grid">
         {% for sujet in sujets %}
-        
+        {% if sujet.team is null %}
         <li>
                     <a class="nav_link black" href="{{ path('app_forum_id', { 'id': sujet.id } )}}">
                         <div class="vignette">
@@ -94,7 +94,7 @@
                         </div>
                     </a>
                 </li>
-
+        {% endif %}
         {% endfor %}
         </ul>
 
