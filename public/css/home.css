@@ -68,7 +68,8 @@ overflow:hidden;
 }
 
 .source{
-    width: 50%;
+    width: fit-content;
+    padding: 0em 0.5em;
     left: 0;
     border-radius: 14px;
     background-color: #C4C4C4;
@@ -131,3 +132,16 @@ overflow:hidden;
 .detail_event{
     padding: 0.5em 0;
 }
+
+@media (max-width: 550px){
+
+    .accueil{
+        padding: 0px;
+    }
+
+    .shadow_contour{
+        width: 98%;
+    }
+    
+}
+

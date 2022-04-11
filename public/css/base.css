@@ -203,3 +203,62 @@ bottom: 0;
   background-color: #11171a;
   border-radius: 10px;
 }
+
+/************** Media Query *****************/
+@media (max-width: 1200px){
+    #burger{
+        display: block;
+    }
+
+    #menu-links{
+        transform: scaleY(0);
+        transform-origin: top;
+        overflow: hidden;
+        width: 100%;
+        background-color: transparent;
+        text-align: center;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        z-index: 1;
+        transition: line-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        line-height: 0;
+        padding: 0 1em;
+        opacity: 0;
+    }
+    #menu-links.slideDown{
+        background-color: rgba(0, 101, 219, 0.90);
+        transform: scaleY(1);
+        line-height: 1.5;
+        opacity: 1;
+    }
+    #menu-links a{
+        display: block;
+        margin: 0.5em 0 0.5em 0.5em;
+    }
+
+    .side-spaced{
+        padding: 1.5em;
+    }
+
+    header>.search_bar{
+        width: 98%;
+    }
+
+    .accueil{
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width:767.98px) {
+   
+}
+
+@media (max-width: 550px){
+
+    .wrapper{
+        max-width: 100%;
+    }
+    
+}
