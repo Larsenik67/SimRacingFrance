@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
+ {% block stylesheets %}
+ <link rel="stylesheet" href="{{ '/css/form.css' }}">
+ <link rel="stylesheet" href="{{ '/css/search.css' }}">
+ {% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
+<main class="wrapper">
+    <section class="form">
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
+    {{ form_start(resetForm, {attr: {class: 'mb-5 flex column'}}) }}
+    <h1 class="mb-5">Entrez votre nouveau mot de passe</h1>
+        {{ form_row(resetForm.plainPassword, {attr: {class: 'mb-5'}}) }}
+        <button class="button-blue mt-5">Modifier le mot de passe</button>
     {{ form_end(resetForm) }}
+    </section>
+</main>
 {% endblock %}

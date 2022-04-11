@@ -181,7 +181,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('simracingfrance@gmail.com', 'Sim Racing France Mail'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('SimRacing France - Réinitialiser le mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

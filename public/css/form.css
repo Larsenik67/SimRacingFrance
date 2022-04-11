@@ -24,3 +24,8 @@ form>textarea{
     width: 40em;
     height: 20em;
 }
+
+.marge{
+    margin-top: 10em;
+    margin-bottom: 10em;
+}
